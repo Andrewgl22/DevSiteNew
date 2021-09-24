@@ -4,24 +4,22 @@ import {Link} from 'react-router-dom';
 
 const JobList = () => {
 
-    const [devList,setDevList] = useState([])
+    const [jobList,setJobList] = useState([])
 
     useEffect(()=>{
-        axios.get('http://localhost:8000/api/devs')
+        axios.get('http://localhost:8000/api/getAllJobs')
         .then((res)=>{
-            setDevList(res.data)
+            console.log(res)
+            setJobList(res.data)
         })
         .catch((err)=>console.log(err))
     },[]);
 
     return(
-        <div className="job-list col-2 ml-5 justify-content-between" style={{overflow:"scroll", height:"430px"}}>
+        <div className="ml-5 justify-content-between border border-dark" style={{overflow:"scroll", height:"430px"}}>
             <h3>Open Jobs</h3>
-            {devList.map((job,idx)=>(
-                job.type === 'job' ?
-                <p style={{color:"black"}}><b>{job.company}-</b><Link to={`/jobpost/${job._id}`} className="job-link" >{job.name}</Link></p>              
-                :
-                undefined
+            {jobList.map((job,idx)=>(
+                <p style={{color:"black"}}><b>{job.company}-</b><Link to={`/jobpost/${job._id}`} className="job-link" >{job.position}</Link></p>              
                 )      
                 
             )}

@@ -1,5 +1,6 @@
-const Dev = require('../controllers/user.controllers');
-const {authenticate} = require('../config/jwt.config')
+const Dev = require('../controllers/user.controllers')
+const {authenticate, checkUser} = require('../config/jwtconfig')
+
 
 const multer = require('multer');
 const upload = multer({dest:'uploads/'});
@@ -17,23 +18,44 @@ const upload = multer({dest:'uploads/'});
 //     }),
 // }
 
-
-
 module.exports = (app) => {
+
+    //CRUD commands
     app.get('/api/devs', Dev.getAll),
     app.get('/api/dev/:id', Dev.getOne),
     app.put('/api/update/:id', Dev.update)
     app.delete('/api/delete/:id', Dev.deleteOne)
+
+    app.get('/api/getAllJobs', Dev.getAllJobs)
+    app.get('/api/getOneJob/:id', Dev.getOneJob)
+    app.post('/api/createjob', Dev.createJob)
+    app.delete('/api/deleteJob/:id', Dev.deleteJob)
+
+    //log and reg commands
     app.post('/api/register', Dev.register),
     app.post('/api/login', Dev.login);
-    app.post('/api/logout', Dev.logOut);
+    app.get('/api/loggedUser', Dev.getLoggedUser)
+    app.get('/api/logout', Dev.logOut);
 
-    app.post('/api/loggedUser', Dev.getLoggedUser)
+    app.post('/api/newchat', checkUser, Dev.createChat)
+
+    //gets all messages related to logged user
+    app.get('/api/getAllChats', checkUser, Dev.getInbox)
+
+    //grabs specific chat conversation into private room
+    app.get('/api/messages/:id/:id2', checkUser, Dev.getFullMessage)
+    app.get('/api/messages/:id', checkUser, Dev.getInbox)
+    app.delete('/api/messages/delete/:id', Dev.deleteChat)
 
     app.delete('/api/dev/delete/:id', Dev.deleteDev)
 
-    app.post('/api/upload', upload.single('photo'), Dev.uploadPhoto)
+    //sends form photo through multer and uploads to S3
+    app.post('/api/upload', upload.single("photo"), Dev.uploadPhoto)
+    //upload.single('photo'), this is middleware that I'm pretty sure I don't need
+
+    //grabs specific photo from S3 by id
     app.get('/images/:key', Dev.getPhoto)
 
+    //grabs top 3 headlines from news API
     app.get('/apiKey', Dev.getapi)
 }

@@ -4,7 +4,7 @@ const TypeForm = ({type, setType, setIconComp}) => {
 
     const empHandler = () => {
         setType('employer')
-        setIconComp('photoForm')
+        setIconComp('siteForm')
     }
 
     const devHandler = () => {

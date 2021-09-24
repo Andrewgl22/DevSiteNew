@@ -15,12 +15,14 @@ const s3 = new S3({
 
 // uploads a file to s3
 function uploadFile(file) {
+  console.log("In upload file")
   const fileStream = fs.createReadStream(file.path)
 
+  console.log(file)
   const uploadParams = {
     Bucket: bucketName,
     Body: fileStream,
-    Key: file.filename
+    Key: file.filename   //file.name
   }
 
   console.log('went through S3 function')

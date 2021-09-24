@@ -2,6 +2,22 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const jobSchema = new mongoose.Schema({
+    //need to store id and name of creator
+    createdBy: {
+        id: {
+            type:String
+        },
+        name: {
+            type:String
+        }
+    },
+    company:{
+        type:String
+    },
+    icon: {
+        //this will be the photo key for the icon on AWS
+        type:String
+    },
     position:{
         type:String
     },
@@ -11,9 +27,26 @@ const jobSchema = new mongoose.Schema({
     location:{
         type:String
     },
-    skillls:{
+    skills:{
         type:[String]
-    },
+    }
+}, {timestampes:true})
+
+const conversationSchema = new mongoose.Schema({
+    from: String,
+    message: String
+    }, {timestamps:true}
+)
+
+const userchatSchema = new mongoose.Schema({
+    id: String,
+    name: String
+})
+
+const chatSchema = new mongoose.Schema({
+    user_ids: [String],
+    names: [String],
+    conversation: [conversationSchema]
 })
 
 const devSchema = new mongoose.Schema({
@@ -78,13 +111,7 @@ const devSchema = new mongoose.Schema({
     company: {
         type:String
     },
-
-    jobs:{
-        type:[jobSchema]
-    },
-    messages:{
-        type:{Array}
-    }
+    messages: [chatSchema],
 })
 
 devSchema.virtual("confirmPassword")
@@ -108,5 +135,8 @@ devSchema.pre("save" , function(next) {
 });
 
 const Dev = mongoose.model("Dev", devSchema)
+const Job = mongoose.model("Job", jobSchema)
+const Chat = mongoose.model("Chat",chatSchema)
+const Convo = mongoose.model("Convo", conversationSchema)
 
-module.exports=Dev;
+module.exports={Dev, Chat, Convo, Job};

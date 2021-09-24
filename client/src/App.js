@@ -30,7 +30,6 @@ function App() {
 
   return (
     <IconProvider>
-    <Container fluid className="App" style={{marginLeft:"0px",marginRight:"0px"}}>
       <Router history={history}>
           <Switch>
             <Route path="/" exact component={DevSignUp} />
@@ -45,9 +44,6 @@ function App() {
             <Route path="/chatroom/:id" exact component={ChatRoom} />
           </Switch>
         </Router>
-      
-  
-    </Container>
     </IconProvider>
   );
 }
@@ -56,10 +52,3 @@ export default App;
 
 // reach-router routing set-up
 
-{/* <Header />
-<Router>
-  <DevSignUp path="/*"/>
-  <Dashboard path='/dashboard/*'/>
-  <JobForm path='/addJob' />
-  <JobPost path='/jobpost/:id'/>
-</Router> */}

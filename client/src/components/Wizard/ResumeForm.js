@@ -24,7 +24,7 @@ const UploadForm = ({setProfilePhoto, setIconComp}) => {
             <button type='submit'>Submit</button>
             </form>
         </div>
-  
+
     )
 
 }

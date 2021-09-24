@@ -14,25 +14,36 @@ import {
 const Dashboard = (props) => {
     console.log(props)
 
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
+
     return(
-        <Container fluid>
-            <Row>
+        <Container fluid className="App m-0 p-0">
+            <Row className="align-items-center justify-content-center">
                 <Header/>
             </Row>
-            <div>
-              
-                <h1>Welcome!</h1>
-            </div>
-            {/* <Link to="/addJob" className="job-button">Add new Job</Link> */}
-          
-                <div>
+            <Row className="d-flex align-items-center justify-content-center mr-5">
+                    <h1>Welcome {loggedUser1.name}!</h1>
+            </Row>
+            { loggedUser1.type == "employer" ? <Link to="/addJob" className="job-button">Add new Job</Link> : null}
+            <Row>
+                    <Col className="col-3 h-25 col-xs-0">
                     <CodeNews />
-                    <DevList/> 
+                    </Col>
+                    <Col className="col col-4 col-xs-12">
+                    <DevList/>
+                    </Col> 
+                    <Col className="col col-3 offset-1 col-xs-12">
                     <JobList />
+                    </Col>
+            </Row>
+                <Row no gutters >
+                    <Col className="p-0">
+                    <div className="mt-2 p-3" style={{backgroundColor:"lightblue"}}>
+                    <p>Copyright 2021 Andrew Lederman. This site is hosted at: <a href="#">Herokuapp.com</a></p>
                 </div>
-                <div className="mt-2" style={{backgroundColor:"cyan"}}>
-                    <p>Copyright 2021 Andrew Lederman. This site is hosted at:</p>
-                </div>
+                    </Col>
+                </Row>
         </Container>    
     )
 }

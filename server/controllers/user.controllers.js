@@ -1,15 +1,40 @@
-const Dev = require('../model/model');
+const {Dev, Chat, Job} = require('../model/model');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { uploadFile, getFileStream } = require('../S3')
 const fs = require('fs');
-const axios = require('axios')
+const axios = require('axios');
 require('dotenv').config();
 
 module.exports.getAll = (req,res) => {
     Dev.find()
     .then((req)=>res.json(req))
     .catch((err)=>console.log(err))
+}
+
+module.exports.getInbox = (req,res) => {
+    Chat.find({})
+    .then((req)=>res.json(req))
+    .catch((err)=>console.log(err))
+}
+
+module.exports.getFullMessage = (req,res) => {
+    Chat.find({user_ids:{$all: [req.params.id,req.params.id2]}})
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
+}
+
+//this is for only if the chats are to be referenced, separate documents instead of embedded
+module.exports.createChat = (req,res) => {
+    Chat.create(req.body)
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
+}
+
+module.exports.deleteChat = (req,res) => {
+    Chat.deleteOne({_id:req.params.id})
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
 }
 
 module.exports.getOne = (req,res) => {
@@ -42,7 +67,32 @@ module.exports.deleteDev = (req,res) => {
     .catch((err) => console.log(err))
 }
 
+module.exports.createJob = (req,res) => {
+    Job.create(req.body)
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
+}
+
+module.exports.getAllJobs = (req,res) => {
+    Job.find()
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
+}
+
+module.exports.getOneJob = (req,res) => {
+    Job.findById({_id:req.params.id})
+    .then((req)=>res.json(req))
+    .catch((err) => console.log(err))
+}
+
+module.exports.deleteJob = (req,res) => {
+    Job.deleteOne({_id:req.params.id})
+    .then((req) => res.json(req))
+    .catch((err) => console.log(err))
+}
+
 module.exports.login = (req,res) => {
+    console.log(req.body.email)
     Dev.findOne({email: req.body.email})
     .then(user=>{
         if (user === null){
@@ -73,10 +123,10 @@ module.exports.login = (req,res) => {
         }
 
 module.exports.logOut = (req, res) => {
-    res
-    .cookie("usertoken", jwt.sign({_id:""}, process.env.JWT_SECRET), {
+    console.log("In logout controller")
+    res.cookie('usertoken', 'none', {
         httpOnly: true,
-        maxAge: 0
+        expires: new Date(Date.now() + 5 * 1000)
     })
     .json({msg: "ok"});
     }
@@ -104,15 +154,16 @@ module.exports.getapi = async (req,res) => {
 module.exports.uploadPhoto = async (req,res) => {
     try {
         console.log(req.file)
-    const file = req.body
-    console.log(file)
-    const result = await uploadFile(file)
-    console.log(result.key)
-    // res.json({key:result.key})
-    } catch {
+        const file = req.file
+        const result = await uploadFile(file)
+        console.log(result)
+        res.json({imageKey: result.key})
+    //here is where I need to store the result.key into the correct user's photo attribute
+    // Dev.findOneAndUpdate(req.body.id, {imageKey:result.key}, {new:true})
+    } catch(err) {
+        console.error(err)
         console.log('there is an error in the upload photo method')
     }
- 
 }
 
 module.exports.getPhoto = (req,res) => {
