@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Button} from 'react-bootstrap';
 
-import {IconContext} from './IconProvider';
+import {IconContext} from '../IconProvider';
 
 
 const FrameForm = ({setIconComp}) => {
@@ -30,7 +30,7 @@ const FrameForm = ({setIconComp}) => {
                     <img src={enumObj.vue} alt="" height="40" width="40" value="java" onClick={()=>setSkill('vue')} />
             </div>
             {skillsArr.length === 10 ? 
-            <Button className="mt-2" onClick={(e)=>setIconComp('photoForm')}>Next Step</Button> : "" }
+            <Button className="mt-2" onClick={(e)=>setIconComp('uploadForm')}>Next Step</Button> : "" }
         </div>
 
     )

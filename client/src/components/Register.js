@@ -47,6 +47,7 @@ const Register = () => {
                     password
                 },{withCredentials:true})
                 console.log(login.data);
+                setLoggedUser(login)
                 history.push('/')
         } catch(err) {
             console.log(err)

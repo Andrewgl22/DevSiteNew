@@ -33,8 +33,8 @@ const DevInfo = () => {
     return(
         <Container fluid>
             <Header />
-            <Row >
-                <Col>  
+            <Row className="d-flex justify-content-center align-items-center">
+                <Col className="col-4">  
 
                 <img src="http://localhost:8000/images/aeaf6051401d7ba03d6e145474d1b21d" alt="" className="profile-photo2" />
                     <h3>{dev.name}</h3>

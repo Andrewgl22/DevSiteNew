@@ -2,9 +2,9 @@ import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom'
 import axios from 'axios';
 import {Button} from 'react-bootstrap';
-import {IconContext} from './IconProvider';
+import {IconContext} from '../IconProvider';
 
-const BioForm = ({type}) => {
+const BioForm = ({type, stackType, imageKey}) => {
 
     const history = useHistory();
 
@@ -19,15 +19,15 @@ const BioForm = ({type}) => {
         try {
         const result = await axios.put('http://localhost:8000/api/update/' + loggedUser._id,{
             type,
-            // stackType, 
+            stackType, 
             skills, 
-            // photoKey, 
+            imageKey, 
             //resume,
             bio, 
             github,
             website
         })
-        console.log(result)
+        console.log(result.data)
         history.push('/dashboard')
             } catch {
                 console.log('not working')

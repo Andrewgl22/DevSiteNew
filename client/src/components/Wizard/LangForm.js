@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Button} from 'react-bootstrap';
 
-import {IconContext} from './IconProvider';
+import {IconContext} from '../IconProvider';
 
 
 const LangForm = ({iconComp, setIconComp}) => {
@@ -18,7 +18,6 @@ const LangForm = ({iconComp, setIconComp}) => {
 
     return(
         <div className="form-box">
-           
             <h2>Pick your top 5 languages</h2>
             <div className="iconBox">
             <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')}  />

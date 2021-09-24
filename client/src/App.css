@@ -5,7 +5,7 @@
 .App {
   text-align: center;
   background-color:lightgray;
-  /* height:650px; */
+  height:1000px;
 }
 
 .inB {
@@ -13,7 +13,7 @@
 }
 
 .header {
-  display:block;
+  /* display:block; */
   background-color:lightseagreen;
   border:2px solid black;
 }
@@ -49,6 +49,7 @@
   border:2px solid gray;
   border-radius:15px;
   margin:20px;
+  width:200px;
   background-color:beige;
   
 }
@@ -92,9 +93,7 @@
   background-color:beige;
   border-radius:10px;
   height:200px;
-  width: 330px;
   padding:15px 15px;
-  overflow:hidden;
 }
 
 .carousel-indicators {
@@ -135,9 +134,9 @@
   padding:15px;
 }
 
-.dev-form {
+/* .dev-form {
   display:inline-block;
-}
+} */
 
 .next-button{
   background-color:lightblue;
@@ -161,12 +160,12 @@
 
 .job-list {
 
-  width:240px;
-  display:inline-block;
+  /* width:240px;
+  display:inline-block; */
   padding:10px;
   /* border-radius:5px; */
-  vertical-align:top;
-  justify-content:right;
+  /* vertical-align:top;
+  justify-content:right; */
 }
 
 .job-link {
@@ -178,7 +177,7 @@
 }
 
 .job-info{
-  display:inline-block;
+  /* display:inline-block; */
   vertical-align: top;
   margin:0;
   color:black;

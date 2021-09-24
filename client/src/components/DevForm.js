@@ -4,13 +4,13 @@ import {Link, navigate} from '@reach/router';
 import {Redirect} from 'react-router-dom'
 import '../App.css'
 import ProgressBar from './ProgressBar';
-import LangForm from './LangForm';
-import FrameForm from './FrameForm';
-import UploadForm from './UploadForm'
-import ResumeForm from './ResumeForm';
-import SiteForm from './SiteForm';
-import TypeForm from './TypeForm';
-import StackForm from './StackForm';
+import LangForm from './Wizard/LangForm';
+import FrameForm from './Wizard/FrameForm';
+import UploadForm from './Wizard/UploadForm'
+import ResumeForm from './Wizard/ResumeForm';
+import SiteForm from './Wizard/SiteForm';
+import TypeForm from './Wizard/TypeForm';
+import StackForm from './Wizard/StackForm';
 import {IconContext} from './IconProvider';
 import {
     Container,
@@ -38,7 +38,7 @@ const DevForm = (props) => {
     const [iconComp, setIconComp] = useState("typeForm");
 
     const [profilePhoto, setProfilePhoto] = useState("")
-  
+
     const [type, setType] = useState("")
     const [stackType, setStackType] = useState("")
 
@@ -54,20 +54,24 @@ const DevForm = (props) => {
         }
 
     return(
-        <div className="App">
-               <Navbar style={{backgroundColor:"seagreen"}}>
-                <Navbar.Brand>Dev Site</Navbar.Brand>
-                <Nav variant="tabs" className="ml-auto">
-                <Nav.Link onclick={(e)=>axios.post('http://localhost:8000/logout')}>Logout</Nav.Link>
-                </Nav>
-            </Navbar>
-            <Row className="ml-5 mt-2 justify-content-center">
+        <Container fluid className="m-0 h-100 px-0">
+            <Row>
+                <Col className="col-sm-12 m-0 p-0">
+                <Navbar className="bg-success">
+                        <Navbar.Brand>Dev Site</Navbar.Brand>
+                        <Nav variant="tabs" className="ml-auto">
+                        <Nav.Link onclick={(e)=>axios.post('http://localhost:8000/logout')}>Logout</Nav.Link>
+                        </Nav>
+                    </Navbar>
+                </Col>
+            </Row>
+            <Row className="ml-5 mt-3 justify-content-center">
                 <h2 className="inB">Complete your profile</h2>  
                 <ProgressBar progress={props.progress} className="inB"/> 
             </Row>
 
             {(() => {
-  
+
                 switch (iconComp) {
                     case 'typeForm':
                         return(
@@ -85,7 +89,7 @@ const DevForm = (props) => {
                         return (
                             <FrameForm setIconComp={setIconComp} />
                         )
-                    case 'photoForm':
+                    case 'uploadForm':
                         return (
                             <UploadForm setProfilePhoto={setProfilePhoto} setIconComp={setIconComp} />
                         )
@@ -95,11 +99,11 @@ const DevForm = (props) => {
                         )
                     case 'siteForm':
                         return (
-                            <SiteForm />
+                            <SiteForm stackType={stackType} imageKey={profilePhoto} />
                         )
                     default:
                         return (
-                        <div>Something went wrong.</div>
+                            <div>Something went wrong.</div>
                         )
                 }
 
@@ -107,7 +111,7 @@ const DevForm = (props) => {
 
             <div className="form-box">
                 <form onSubmit={submitForm}>
-                    <div className="pic-box">
+                    <div className="pic-box mb-5">
                         
                         <div>
                             <img src="http://localhost:8000/images/aeaf6051401d7ba03d6e145474d1b21d" alt="" className="profile-photo" />
@@ -119,9 +123,7 @@ const DevForm = (props) => {
 
                     
                         <div className="innerPic mt-2">
-                           
-                      
-                           
+
                             <div>
                             {skillsArr.map((skill,idx)=>(
                                 <>
@@ -130,16 +132,11 @@ const DevForm = (props) => {
                             ))}
                             </div>
                             
-                          
                         </div>
                     </div><br></br>
-                </form>
-                
-   
-                
+                </form>   
             </div>
-        </div>
-        
+        </Container>   
     )
 }
 
