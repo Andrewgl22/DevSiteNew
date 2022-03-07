@@ -92,8 +92,15 @@
   border:2px solid black;
   background-color:beige;
   border-radius:10px;
-  height:200px;
+  height:220px;
   padding:15px 15px;
+}
+
+.counter {
+  background-color:red;
+  color: white;
+  border-radius:60px;
+  margin-left:5px;
 }
 
 .carousel-indicators {
@@ -117,6 +124,12 @@
   display:inline-block;
   border-radius:10px;
   float:left;
+}
+
+.chatbox {
+  display:block;
+  overflow:hidden;
+  height:500px;
 }
 
 .profile-photo2 {

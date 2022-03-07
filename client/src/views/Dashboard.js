@@ -25,7 +25,7 @@ const Dashboard = (props) => {
             <Row className="d-flex align-items-center justify-content-center mr-5">
                     <h1>Welcome {loggedUser1.name}!</h1>
             </Row>
-            { loggedUser1.type == "employer" ? <Link to="/addJob" className="job-button">Add new Job</Link> : null}
+            { loggedUser1.type === "employer" ? <Link to="/addJob" className="job-button">Add new Job</Link> : null}
             <Row>
                     <Col className="col-3 h-25 col-xs-0">
                     <CodeNews />

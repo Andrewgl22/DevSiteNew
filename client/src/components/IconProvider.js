@@ -19,9 +19,7 @@ export const IconContext = createContext();
 
 
 export const IconProvider = (props) => {
-        const [name, setName] = useState("")
-        const [bio, setBio] = useState("")
-        const [skills, setSkills] = useState([])
+
         const [progress,setProgress] = useState(0)
         const [loggedUser, setLoggedUser] = useState({})
     
@@ -45,9 +43,6 @@ export const IconProvider = (props) => {
         return(
             <IconContext.Provider value={{
                 icons:[enumObj,setEnumObj], 
-                name:[name,setName], 
-                bio:[bio, setBio], 
-                skills:[skills, setSkills], 
                 progress:[progress, setProgress], 
                 user:[loggedUser,setLoggedUser]}}>
                 {props.children}

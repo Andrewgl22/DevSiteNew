@@ -1,10 +1,10 @@
 import React from 'react';
 
-const TypeForm = ({type, setType, setIconComp}) => {
+const TypeForm = ({setType, setIconComp}) => {
 
     const empHandler = () => {
         setType('employer')
-        setIconComp('siteForm')
+        setIconComp('uploadForm')
     }
 
     const devHandler = () => {

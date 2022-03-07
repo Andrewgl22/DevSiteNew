@@ -47,8 +47,11 @@ const Register = () => {
                     password
                 },{withCredentials:true})
                 console.log(login.data);
-                setLoggedUser(login)
-                history.push('/')
+                let logged = await axios.get("http://localhost:8000/api/loggedUser", {withCredentials: true})
+                console.log(logged.data)
+                localStorage.setItem('loggedUser', JSON.stringify(logged.data))
+                console.log(`Logged in user is: ${logged.data.name}`)
+                history.push('/wizard')
         } catch(err) {
             console.log(err)
             setErrors(err.response.data.errors)

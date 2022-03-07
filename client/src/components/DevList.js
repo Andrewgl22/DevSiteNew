@@ -3,10 +3,15 @@ import '../App.css';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {IconContext} from './IconProvider';
-import {Carousel, Container, Col, Row, Button} from 'react-bootstrap';
+import {Carousel, Container, Col, Row, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
+
 
 
 const DevList = (props) => {
+
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
+
     const [devList,setDevList] = useState([])
 
     const {icons} = useContext(IconContext);
@@ -25,35 +30,48 @@ const DevList = (props) => {
     
     return(           
                 <Col className="align-items-center mr-0">
-       
                 <h4>Featured Devs</h4>
                 <Carousel className="mt-3">
                     {devList.map((dev,idx)=>(
-                        dev.type === 'dev' ?
                         // <div key={idx} className="pic-box">
+                        dev.type == "dev" ?
                             <Carousel.Item key={idx} className="pic-box2">
-                                <img src="http://localhost:8000/images/aeaf6051401d7ba03d6e145474d1b21d" alt="" className="profile-photo" />
+                                <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo" />
                                 <h2>{dev.name}</h2>
                                 <h6>{dev.stackType}</h6>
                                 <Row className="h-2">
                                     <Col className="">
                                         <div className="" >
+                                            <>
                                             {dev.skills.map((skill,idx)=>(
-                                                <>
-                                                    <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
-                                                </>
-                                            ))}   
+                                               
+                                                    <>
+                                                        <OverlayTrigger
+                                                        key={idx}
+                                                        placement='bottom'
+                                                        overlay={
+                                                        <Tooltip className="show">
+                                                            <strong>{skill}</strong>
+                                                        </Tooltip>
+                                                        }
+                                                    >
+                                                        <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
+                                                        </OverlayTrigger>
+                                                    </>
+                                               
+                                            ))}  
+                                            </> 
                                         </div>
+
                                     </Col>
                                 </Row>
-                                <button className="mt-2" style={{borderRadius:"15px"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className=" mb-5" style={{borderRadius:"15px", marginBottom:"10px;"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
-                        /* </div> */
-                        :
-                        undefined    
-                    ))}
+                        /* </div> */   
+                        : "")) }
                 </Carousel>
                     </Col>
+                    
     )
 }
 

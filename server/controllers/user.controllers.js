@@ -43,7 +43,12 @@ module.exports.getOne = (req,res) => {
     .catch((err)=>console.log(err))
 }
 
+module.exports.count = (req,res) => {
+    Chat.findById({_id:req.params.id})
+}
+
 module.exports.update = (req,res) => {
+    console.log("In update api")
     Dev.findOneAndUpdate({_id:req.params.id}, req.body, {new:true, runValidators:true})
     .then((req)=> res.json(req))
     .catch((err)=>res.json(err))
@@ -73,15 +78,27 @@ module.exports.createJob = (req,res) => {
     .catch((err) => console.log(err))
 }
 
+// use matchJobPercentage function here
+// add percentage attribute to each job
+// sort by percentage
+// then send to front end for rendering
 module.exports.getAllJobs = (req,res) => {
     Job.find()
-    .then((req)=>res.json(req))
+    .then((req)=>{
+        // for each job in the response:
+        // calculate percentage match with loggedInUser
+        // add percentage on to each job
+        res.json(req)
+    })
     .catch((err) => console.log(err))
 }
 
 module.exports.getOneJob = (req,res) => {
     Job.findById({_id:req.params.id})
-    .then((req)=>res.json(req))
+    .then((req)=>{
+        console.log("In getOneJob")
+        res.json(req)
+    })
     .catch((err) => console.log(err))
 }
 
@@ -92,7 +109,7 @@ module.exports.deleteJob = (req,res) => {
 }
 
 module.exports.login = (req,res) => {
-    console.log(req.body.email)
+    // console.log(req.body.email)
     Dev.findOne({email: req.body.email})
     .then(user=>{
         if (user === null){
@@ -158,18 +175,20 @@ module.exports.uploadPhoto = async (req,res) => {
         const result = await uploadFile(file)
         console.log(result)
         res.json({imageKey: result.key})
-    //here is where I need to store the result.key into the correct user's photo attribute
-    // Dev.findOneAndUpdate(req.body.id, {imageKey:result.key}, {new:true})
     } catch(err) {
         console.error(err)
         console.log('there is an error in the upload photo method')
     }
 }
 
-module.exports.getPhoto = (req,res) => {
-    const key = req.params.key
-    console.log(key)
-    const readStream = getFileStream(key)
-    readStream.pipe(res)
-    console.log(readStream)
+module.exports.getPhoto = async (req,res) => {
+    try {
+        const key = req.params.key
+        console.log(key)
+        const readStream = getFileStream(key)
+        readStream.pipe(res)
+    } catch(err) {
+        console.error(err)
+        console.log("getPhoto method error")
+    }
 }

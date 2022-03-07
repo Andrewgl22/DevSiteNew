@@ -19,7 +19,6 @@ const Login = () => {
     const [errors, setErrors] = useState({});
 
     const {user} = useContext(IconContext);
-    const [loggedUser, setLoggedUser] = user;
 
     const LoginHandler = async (e) => {
         e.preventDefault();
@@ -29,17 +28,14 @@ const Login = () => {
             password
         },{withCredentials:true})
         let logged = await axios.get("http://localhost:8000/api/loggedUser", {withCredentials: true})
-        console.log(logged.data)
+        console.log(`Email is: ${logged.data}`);
         localStorage.setItem('loggedUser', JSON.stringify(logged.data))
         console.log(`Logged in user is: ${logged.data.name}`)
-        history.push('/')
+        history.push('/dashboard')
     } catch {
         console.log('error')
     }
     }
-
- 
-
 
     return(
         <Container className="jumbotron h-100" fluid>

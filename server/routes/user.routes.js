@@ -42,6 +42,9 @@ module.exports = (app) => {
     //gets all messages related to logged user
     app.get('/api/getAllChats', checkUser, Dev.getInbox)
 
+
+    app.get('/api/count/{id}', Dev.count)
+
     //grabs specific chat conversation into private room
     app.get('/api/messages/:id/:id2', checkUser, Dev.getFullMessage)
     app.get('/api/messages/:id', checkUser, Dev.getInbox)

@@ -34,6 +34,7 @@ const jobSchema = new mongoose.Schema({
 
 const conversationSchema = new mongoose.Schema({
     from: String,
+    key: String, 
     message: String
     }, {timestamps:true}
 )
