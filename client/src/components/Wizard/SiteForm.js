@@ -4,31 +4,47 @@ import axios from 'axios';
 import {Button} from 'react-bootstrap';
 import {IconContext} from '../IconProvider';
 
-const BioForm = ({type, stackType, imageKey}) => {
+const BioForm = ({type, stackType, imageKey, skillsArr}) => {
 
     const history = useHistory();
 
-    const {user, bio, skills} = useContext(IconContext)
-    const [loggedUser] = user;
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
+
+    const {bio} = useContext(IconContext)
 
     const [github, setGithub] = useState("")
     const [website, setWebsite] = useState("")
 
+
     const submitHandler = async (e) => {
         e.preventDefault()      
         try {
-        const result = await axios.put('http://localhost:8000/api/update/' + loggedUser._id,{
-            type,
-            stackType, 
-            skills, 
-            imageKey, 
-            //resume,
-            bio, 
-            github,
-            website
+            console.log("Trying to update and ID is: " + loggedUser1._id)
+            const result = await axios.put(`http://localhost:8000/api/update/${loggedUser1._id}`,{
+                type,
+                stackType, 
+                skills:skillsArr, 
+                imageKey, 
+                bio, 
+                github,
+                website
         })
-        console.log(result.data)
-        history.push('/dashboard')
+        
+        console.log(result)
+
+        //add imageKey into loggedUser browser object
+        var existing = localStorage.getItem('loggedUser');
+        existing = existing ? JSON.parse(existing) : {};
+        existing['imageKey'] = imageKey;
+        existing['type'] = type;
+        localStorage.setItem('loggedUser', JSON.stringify(existing));
+
+        function next(){
+            history.push('/dashboard')
+        }
+        setTimeout(next, 4000)
+
             } catch {
                 console.log('not working')
             }
@@ -41,7 +57,7 @@ const BioForm = ({type, stackType, imageKey}) => {
                 <input type="text" onChange={(e)=>setGithub(e.target.value)}></input><br></br>
                 <label>Personal Site: </label>
                 <input type="text" onChange={(e)=>setWebsite(e.target.value)}></input><br></br>
-           <Button onClick={submitHandler}>Submit</Button>
+        <Button onClick={submitHandler}>Submit</Button>
         </div>
     )
 }

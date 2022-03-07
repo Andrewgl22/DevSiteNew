@@ -1,14 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams, useHistory, Link} from 'react-router-dom';
 import {
     Container,
     Row,
     Col,
-    Button
+    Button,
+    OverlayTrigger, 
+    Tooltip
 } from 'react-bootstrap';
 import Header from '../components/Header'
 import {IconContext} from '../components/IconProvider'
+
 
 const DevInfo = () => {
 
@@ -19,6 +22,9 @@ const DevInfo = () => {
 
     const {icons} = useContext(IconContext);
     const [enumObj, setEnumObj] = icons;
+
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/dev/${id}`)
@@ -35,25 +41,35 @@ const DevInfo = () => {
             <Header />
             <Row className="d-flex justify-content-center align-items-center">
                 <Col className="col-4">  
-
-                <img src="http://localhost:8000/images/aeaf6051401d7ba03d6e145474d1b21d" alt="" className="profile-photo2" />
+                {dev.imageKey ?
+                <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo2" /> :null}
+                
                     <h3>{dev.name}</h3>
-                    {/* <div>
-                    {dev.skills.map((skill,idx)=>(
+                    <div>
+
+                    {dev.skills ? dev.skills.map((skill,idx)=>(
                             <>
+                                  <OverlayTrigger
+                                                        key={idx}
+                                                        placement='bottom'
+                                                        overlay={
+                                                        <Tooltip className="show">
+                                                            <strong>{skill}</strong>
+                                                        </Tooltip>
+                                                        }
+                                                    >
                                 <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
+                                </OverlayTrigger>
                             </>
-                        ))}  
-                    </div>   */}
-                   
+                        )) : null}  
+                    </div>  
+        
                     <p>{dev.bio}</p>
                     <p><b>Website:</b> {dev.website}</p>
                     <p><b>Github:</b>{dev.github}</p>
 
-                    <Button onClick={(e)=>history.push(`/chatroom/${dev._id}`)}>Message {dev.name}</Button>
-
-               
-                  
+                    {loggedUser1._id != dev._id ? <Link to={"/chatroom/" + dev._id}><Button>Message {dev.name}</Button></Link> : null}
+                
                 </Col>
             </Row>
         </Container>

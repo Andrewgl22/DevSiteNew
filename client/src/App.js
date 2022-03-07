@@ -32,7 +32,9 @@ function App() {
     <IconProvider>
       <Router history={history}>
           <Switch>
-            <Route path="/" exact component={DevSignUp} />
+            {/* Index leads to register page now */}
+            <Route path="/" exact component={Register} />
+            <Route path="/wizard" exact component={DevSignUp} />
             <Route path="/login" exact component={Login} />
             <Route path="/logout" exact component={Login} />
             <Route path="/register" exact component={Register} />

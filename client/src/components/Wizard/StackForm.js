@@ -8,13 +8,13 @@ import {
 
 const StackForm = ({setIconComp, setStackType}) => {
 
-    const empHandler = () => {
-        setIconComp('langForm')
-    }
+    // const empHandler = () => {
+    //     setIconComp('langForm')
+    // }
 
-    const devHandler = () => {
-        setIconComp('stackForm')
-    }
+    // const devHandler = () => {
+    //     setIconComp('stackForm')
+    // }
 
     const submitHandler = (e) => {
         setIconComp('langForm')

@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
     socket.on("clientEvent", (data) => {
         const chatcheck = Chat.exists({ user_ids: { $all: [ data.to , data.from ] } }).then(function(res){
             if(res == true){
-                Chat.findOneAndUpdate({ user_ids: { $all: [ data.to , data.from ] } }, {$push:{conversation: {from:data.from,message:data.msg}}})
+                Chat.findOneAndUpdate({ user_ids: { $all: [ data.to , data.from ] } }, {$push:{conversation: {from:data.from, key:data.key, unread:true, message:data.msg}}})
                     .then(()=>console.log("Updated existing Chat document with new message"))
                     .catch((err)=>res.json(err))
                 
@@ -36,13 +36,12 @@ io.on("connection", (socket) => {
     
             else {
                 console.log("In create else statement")
-                Chat.create({user_ids: [data.to,data.from], names:[data.name1,data.name2], conversation: [{from:data.from,message:data.msg}]})
+                Chat.create({user_ids: [data.to,data.from], names:[data.name1,data.name2], conversation: [{from:data.from, key:data.key, message:data.msg}]})
                     .then(console.log("New Chat document created in database"))
                     .catch((err) => console.log(err))
             }
         })
-
-        //have to figure out how to emit only to the specific user
+        console.log(data)
         io.emit("message", data);
     })
 })

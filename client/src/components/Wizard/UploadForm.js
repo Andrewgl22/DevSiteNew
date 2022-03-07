@@ -6,6 +6,8 @@ const UploadForm = ({setProfilePhoto, setIconComp}) => {
 
     let reader = new FileReader();
 
+    const [loading, setLoading] = useState(false)
+
     const [file, setFile] = useState(null);
 
     const saveFile = (e) => {
@@ -34,6 +36,7 @@ const UploadForm = ({setProfilePhoto, setIconComp}) => {
             console.log(key[0] + ', ' + key[1]);
         }
         try {
+            setLoading(true)
             const result = await axios.post(url, formData, {headers:{"Content-Type": "multipart/form-data"}})
             console.log("The key is" + result.data.imageKey)
             setProfilePhoto(result.data.imageKey)
@@ -48,6 +51,9 @@ const UploadForm = ({setProfilePhoto, setIconComp}) => {
 
     return(
         <div className="form-box">
+            {loading ? <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div> : null}
             <h2>Submit your profile photo</h2>
             <form onSubmit={submitHandler}>
             <input type="hidden" name="id" value={loggedUser1._id}></input>

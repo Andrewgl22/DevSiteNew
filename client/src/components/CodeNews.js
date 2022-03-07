@@ -14,7 +14,7 @@ const CodeNews = () => {
     useEffect(() => {
         axios.get('http://localhost:8000/apiKey')
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
             let tempArr = [];
             for(let i=0;i < 3; i++){
                 tempArr.push({
