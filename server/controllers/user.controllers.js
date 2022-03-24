@@ -43,8 +43,19 @@ module.exports.getOne = (req,res) => {
     .catch((err)=>console.log(err))
 }
 
-module.exports.count = (req,res) => {
-    Chat.findById({_id:req.params.id})
+module.exports.count = async (req,res) => {
+    // get all chats with loggedUserId
+    // count all unread messages
+    // store number in variable
+    // return to front end
+
+    // db.chats.aggregate({$project:{_id:0,count:{$size:"$conversation"}}})
+    let chats = await Chat.aggregate([{$match:{user_ids:req.params.id}},{$project:{_id:0,conversation:{$size:"$conversation"}}},{$group:{_id:null,convo:{$sum:"$conversation"}}}])
+    let finalchats = await res.json(chats)
+    let myarray = []
+    // myarray.append(finalchats["convo"]) 
+    return myarray
+    // for each chat document loop through the conversation with count
 }
 
 module.exports.update = (req,res) => {
@@ -60,12 +71,6 @@ module.exports.deleteOne = (req,res) => {
     .catch((err)=>res.json(err))
 }
 
-module.exports.register = (req,res) => {
-    Dev.create(req.body)
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
-}
-
 module.exports.deleteDev = (req,res) => {
     Dev.deleteOne({_id:req.params.id})
     .then((req) => res.json(req))
@@ -75,19 +80,12 @@ module.exports.deleteDev = (req,res) => {
 module.exports.createJob = (req,res) => {
     Job.create(req.body)
     .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
+    .catch((err) => res.status(400).json(err))
 }
 
-// use matchJobPercentage function here
-// add percentage attribute to each job
-// sort by percentage
-// then send to front end for rendering
 module.exports.getAllJobs = (req,res) => {
     Job.find()
     .then((req)=>{
-        // for each job in the response:
-        // calculate percentage match with loggedInUser
-        // add percentage on to each job
         res.json(req)
     })
     .catch((err) => console.log(err))
@@ -106,6 +104,12 @@ module.exports.deleteJob = (req,res) => {
     Job.deleteOne({_id:req.params.id})
     .then((req) => res.json(req))
     .catch((err) => console.log(err))
+}
+
+module.exports.register = (req,res) => {
+    Dev.create(req.body)
+    .then((req)=>res.json(req))
+    .catch((err) => res.status(400).json(err))
 }
 
 module.exports.login = (req,res) => {

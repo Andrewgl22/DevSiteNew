@@ -5,6 +5,7 @@ import Dashboard from './views/Dashboard';
 import DevSignUp from './views/DevSignUp';
 import JobPost from './views/JobPost';
 import Login from './components/Login';
+import Header from './components/Header'
 import Register from './components/Register';
 import DevInfo from './views/DevInfo'
 import Messages from './components/Messages';
@@ -30,12 +31,15 @@ function App() {
 
   return (
     <IconProvider>
+      <Router>
+        <Route path="/" exact component={Register} />
+        <Route path="/login" exact component={Login} />
+      </Router>
       <Router history={history}>
+      <Header/>
           <Switch>
             {/* Index leads to register page now */}
-            <Route path="/" exact component={Register} />
             <Route path="/wizard" exact component={DevSignUp} />
-            <Route path="/login" exact component={Login} />
             <Route path="/logout" exact component={Login} />
             <Route path="/register" exact component={Register} />
             <Route path="/dashboard" exact component={Dashboard} />

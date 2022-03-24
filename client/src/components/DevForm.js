@@ -103,7 +103,7 @@ const DevForm = (props) => {
                         )
                     case 'uploadForm':
                         return (
-                            <UploadForm setProfilePhoto={setImageKey} setIconComp={setIconComp} />
+                            <UploadForm setProfilePhoto={setImageKey} setIconComp={setIconComp} progressValue ={progressValue} setProgressValue={setProgressValue}/>
                         )
                     // case 'bioForm':
                     //     return (
@@ -111,7 +111,7 @@ const DevForm = (props) => {
                     //     )
                     case 'siteForm':
                         return (
-                            <SiteForm stackType={stackType} imageKey={imageKey} skillsArr={skillsArr} type={type} />
+                            <SiteForm stackType={stackType} imageKey={imageKey} skillsArr={skillsArr} type={type} progressValue ={progressValue} setProgressValue={setProgressValue}/>
                         )
                     default:
                         return (

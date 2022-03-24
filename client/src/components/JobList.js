@@ -9,7 +9,7 @@ const JobList = () => {
 
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
-    console.log(loggedUser1)
+    // console.log(loggedUser1)
 
     useEffect(()=>{
         axios.get('http://localhost:8000/api/getAllJobs')
@@ -17,23 +17,35 @@ const JobList = () => {
             for(let i=0;i<res.data.length;i++){
                 let percentage = calculateMatchPercentage(loggedUser1.skills, res.data[i].skills)
                 res.data[i].perc = percentage;
-                console.log(res.data[i])
+            
+                // console.log(res.data[i])
             }
             setJobList(res.data)
         })
         .catch((err)=>console.log(err))
     },[]);
 
+    const switchStyle = (matchnum) => {
+        if(matchnum >= 80){
+            return "green"
+        } else if(matchnum >=60 && matchnum < 80){
+            return "yellow"
+        } else if(matchnum < 60){
+            return "red"
+        } else {
+            return "black"
+        }
+    }
+    
+
     return(
         <div className="ml-5 justify-content-between border border-dark" style={{overflow:"scroll", height:"430px"}}>
             <h3>Open Jobs</h3>
             {jobList.sort((a,b)=>a.perc < b.perc ? 1:-1).map((job,idx)=>(
-                <p style={{color:"black"}}><b>{job.company}-</b><Link to={`/jobpost/${job._id}`} className="job-link" >{job.position} {job.perc}</Link></p>              
+                <p style={{color:"black"}} key={idx}><b>{job.company}-</b><Link to={`/jobpost/${job._id}`} className="job-link" >{job.position} <span style={{color:switchStyle(job.perc)}}>{job.perc} %</span></Link></p>              
                 )      
                 
             )}
-
-
         </div>
 
     )

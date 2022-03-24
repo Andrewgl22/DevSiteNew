@@ -23,13 +23,15 @@ let clientSocketIds = []
 let connectedUsers = []
 
 io.on("connection", (socket) => {
-    console.log("New connection at" + socket.id);
+    // console.log("New connection at" + socket.id);
 
     socket.on("clientEvent", (data) => {
         const chatcheck = Chat.exists({ user_ids: { $all: [ data.to , data.from ] } }).then(function(res){
             if(res == true){
-                Chat.findOneAndUpdate({ user_ids: { $all: [ data.to , data.from ] } }, {$push:{conversation: {from:data.from, key:data.key, unread:true, message:data.msg}}})
-                    .then(()=>console.log("Updated existing Chat document with new message"))
+                Chat.findOneAndUpdate({ user_ids: { $all: [ data.to , data.from ] } }, {$push:{conversation: {from:data.from, key:data.key, message:data.msg, unread:true}}},{new:true})
+                    .then((newChat)=>{
+                        console.log(newChat)
+                        console.log("Updated existing Chat document with new message")})
                     .catch((err)=>res.json(err))
                 
             }

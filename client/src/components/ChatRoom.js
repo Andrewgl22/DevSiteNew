@@ -70,8 +70,7 @@ const ChatRoom = () => {
 
 
     return(
-        <Container fluid className="App m-0 p-0 bg-light mx-0">
-            <Header />
+        <Container fluid className="App m-0 p-0 pt-3 bg-light mx-0">
             <Row nogutter className="h-100">
             <Col className="">
             { user2.name ? <h1>Send a message to {user2.name}</h1>: null}

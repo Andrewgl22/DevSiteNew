@@ -21,7 +21,7 @@ const Register = () => {
     const [state, setState] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState([])
 
     const history = useHistory();
 
@@ -53,45 +53,38 @@ const Register = () => {
                 console.log(`Logged in user is: ${logged.data.name}`)
                 history.push('/wizard')
         } catch(err) {
-            console.log(err)
-            setErrors(err.response.data.errors)
+            const errorResponse = err.response.data.errors;
+            const errorArr = []; 
+            for (const key of Object.keys(errorResponse)) { 
+                errorArr.push(errorResponse[key].message)
+            }
+                // Set Errors
+            setErrors(errorArr);
+            }  
         }
-
-    }
 
     return(
         <div className="App">
             
             <Link to="/login">Already a member? Log in here.</Link>
-            <Form className="jumbotron m-5 w-50 mx-auto">
-            <Form.Group controlId="formBasicEmail" >
+            <Form className="jumbotron m-5 h-50 w-50 mx-auto">
+            {errors.map((err, index) => <p key={index} class="text-danger">{err}</p>)}
+            <Form.Group  controlId="formBasicEmail" >
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your name" onChange={(e)=> setName(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        You're almost there!
-                    </Form.Text>
                 </Form.Group>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group  controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" placeholder="johndoe@gmail.com" onChange={(e)=> setEmail(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        You're almost there!
-                    </Form.Text>
                 </Form.Group>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group  controlId="formBasicEmail">
                     <Form.Label>Address</Form.Label>
                     <Form.Control type="text" placeholder="12345 Main Street" onChange={(e)=> setAddress(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        We won't share this with anyone
-                    </Form.Text>
                 </Form.Group>
                 <Row>
                 <Form.Group controlId="formBasicEmail" className="col-8">
                     <Form.Label>City</Form.Label>
                     <Form.Control type="text" placeholder="City" onChange={(e)=> setCity(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        We won't share this with anyone
-                    </Form.Text>
                 </Form.Group>
                 <Form.Group controlId="formBasicEmail" className="col-2">
                     <Form.Label>State</Form.Label>

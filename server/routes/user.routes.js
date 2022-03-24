@@ -43,7 +43,7 @@ module.exports = (app) => {
     app.get('/api/getAllChats', checkUser, Dev.getInbox)
 
 
-    app.get('/api/count/{id}', Dev.count)
+    app.get('/api/count/:id', Dev.count)
 
     //grabs specific chat conversation into private room
     app.get('/api/messages/:id/:id2', checkUser, Dev.getFullMessage)

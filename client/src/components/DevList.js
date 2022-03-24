@@ -44,7 +44,7 @@ const DevList = (props) => {
                                         <div className="" >
                                             <>
                                             {dev.skills.map((skill,idx)=>(
-                                               
+                                            
                                                     <>
                                                         <OverlayTrigger
                                                         key={idx}
@@ -58,14 +58,14 @@ const DevList = (props) => {
                                                         <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
                                                         </OverlayTrigger>
                                                     </>
-                                               
+                                            
                                             ))}  
                                             </> 
                                         </div>
 
                                     </Col>
                                 </Row>
-                                <button className=" mb-5" style={{borderRadius:"15px", marginBottom:"10px;"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className="mb-5" style={{borderRadius:"15px", marginBottom:"10px"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
                         /* </div> */   
                         : "")) }

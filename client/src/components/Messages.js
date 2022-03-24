@@ -32,9 +32,17 @@ const Messages = () => {
 
     },[])
 
+    // const whichUser = (match) => {
+    //     if(match[0] == loggedUser1.id){
+    //         return match[1]
+    //     } else if(match[1] == loggedUser1.id){
+    //         return match[0]
+    //     }
+    // }
+    // whichUser(message.user_ids)
+
     return(
         <Container fluid className="m-0 p-0">
-            <Header />
             <Row className="align-items-center justify-content-center">
                 <Table className="bordered table-striped col-6">
                     <th>

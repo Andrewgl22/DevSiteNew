@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Button} from 'react-bootstrap';
 import {IconContext} from '../IconProvider';
 
-const BioForm = ({type, stackType, imageKey, skillsArr}) => {
+const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgressValue}) => {
 
     const history = useHistory();
 
@@ -50,13 +50,23 @@ const BioForm = ({type, stackType, imageKey, skillsArr}) => {
             }
     }
 
+    const siteChange = (val) => {
+        setGithub(val);
+        setProgressValue(progressValue + 3);
+    }
+
+    const webChange = (val) => {
+        setWebsite(val);
+        setProgressValue(progressValue + 3);
+    }
+
     return(
         <div className="form-box">
         <h3>Add links to your work</h3>
                 <label>Github: </label>
-                <input type="text" onChange={(e)=>setGithub(e.target.value)}></input><br></br>
+                <input type="text" onChange={(e)=>siteChange(e.target.value)}></input><br></br>
                 <label>Personal Site: </label>
-                <input type="text" onChange={(e)=>setWebsite(e.target.value)}></input><br></br>
+                <input type="text" onChange={(e)=>webChange(e.target.value)}></input><br></br>
         <Button onClick={submitHandler}>Submit</Button>
         </div>
     )

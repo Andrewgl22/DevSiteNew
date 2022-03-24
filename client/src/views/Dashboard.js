@@ -18,9 +18,8 @@ const Dashboard = (props) => {
     const loggedUser1 = JSON.parse(localUser)
 
     return(
-        <Container fluid className="App m-0 p-0">
+        <Container fluid className="App p-0">
             <Row className="align-items-center justify-content-center">
-                <Header/>
             </Row>
             <Row className="d-flex align-items-center justify-content-center mr-5">
                     <h1>Welcome {loggedUser1.name}!</h1>

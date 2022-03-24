@@ -11,22 +11,26 @@ const jobSchema = new mongoose.Schema({
         }
     },
     company:{
-        type:String
+        type:String,
+        required:[true, "Company is required"]
     },
     icon: {
         //this will be the photo key for the icon on AWS
         type:String
     },
     position:{
-        type:String
+        type:String,
+        required:[true, "Position is required"]
     },
     description:{
-        type:String
+        type:String,
+        required:[true, "Description is required"]
     },
     location:{
-        type:String
+        type:String,
+        required:[true, "Location is required"]
     },
     skills:{
         type:[String]
     }
-}, {timestampes:true})
+}, {timestamps:true})

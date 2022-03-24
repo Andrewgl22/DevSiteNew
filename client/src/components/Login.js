@@ -16,7 +16,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState([]);
 
     const {user} = useContext(IconContext);
 
@@ -32,19 +32,24 @@ const Login = () => {
         localStorage.setItem('loggedUser', JSON.stringify(logged.data))
         console.log(`Logged in user is: ${logged.data.name}`)
         history.push('/dashboard')
-    } catch {
+    } catch(err) {
+        const errorResponse = err.response.data.message;
+        
+        setErrors(errorResponse);
+
         console.log('error')
     }
     }
 
     return(
-        <Container className="jumbotron h-100" fluid>
+        <Container className="jumbotron h-100 login" fluid>
             <Row className="d-flex justify-content-center align-items-center">
                 <Col className="col-6">
                 <h1>Login</h1>
                 <Link to="/register">Register Here</Link>
                 
                     <Form className="w-50 mx-auto">
+                        <p className="text-danger">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />

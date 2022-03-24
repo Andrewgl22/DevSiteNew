@@ -38,7 +38,6 @@ const DevInfo = () => {
 
     return(
         <Container fluid>
-            <Header />
             <Row className="d-flex justify-content-center align-items-center">
                 <Col className="col-4">  
                 {dev.imageKey ?
