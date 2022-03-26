@@ -10,6 +10,8 @@ import Register from './components/Register';
 import DevInfo from './views/DevInfo'
 import Messages from './components/Messages';
 import ChatRoom from './components/ChatRoom';
+import MainLayout from './components/layout/MainLayout';
+import LogRegLayout from './components/layout/LogRegLayout';
 import './App.css';
 import { Container } from 'react-bootstrap';
 import {
@@ -31,23 +33,25 @@ function App() {
 
   return (
     <IconProvider>
-      <Router>
-        <Route path="/" exact component={Register} />
-        <Route path="/login" exact component={Login} />
-      </Router>
+        <Header />
       <Router history={history}>
-      <Header/>
           <Switch>
-            {/* Index leads to register page now */}
-            <Route path="/wizard" exact component={DevSignUp} />
-            <Route path="/logout" exact component={Login} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/addJob" component={JobForm} />
-            <Route path="/jobpost/:id" exact component={JobPost} />
-            <Route path="/devinfo/:id" exact component={DevInfo} />
-            <Route path="/messages/:id" exact component={Messages} />
-            <Route path="/chatroom/:id" exact component={ChatRoom} />
+            
+            <Route path="/" exact component={Register} />
+            <Route path="/login" exact component={Login} />
+        
+        
+              {/* Index leads to register page now */}
+              <Route path="/wizard" exact component={DevSignUp} />
+              <Route path="/logout" exact component={Login} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/addJob" component={JobForm} />
+              <Route path="/jobpost/:id" exact component={JobPost} />
+              <Route path="/devinfo/:id" exact component={DevInfo} />
+              <Route path="/messages/:id" exact component={Messages} />
+              <Route path="/chatroom/:id" exact component={ChatRoom} />
+            
           </Switch>
         </Router>
     </IconProvider>

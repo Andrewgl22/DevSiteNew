@@ -22,7 +22,7 @@ const Messages = () => {
     const loggedUser1 = JSON.parse(localUser)
 
     useEffect(()=>{
-        axios.get('http://localhost:8000/api/messages/' + loggedUser1.id)
+        axios.get('http://localhost:8000/api/chats/messages/' + loggedUser1.id)
         .then((res)=>{
             setMessages(res.data)
         })
@@ -31,15 +31,6 @@ const Messages = () => {
         })
 
     },[])
-
-    // const whichUser = (match) => {
-    //     if(match[0] == loggedUser1.id){
-    //         return match[1]
-    //     } else if(match[1] == loggedUser1.id){
-    //         return match[0]
-    //     }
-    // }
-    // whichUser(message.user_ids)
 
     return(
         <Container fluid className="m-0 p-0">

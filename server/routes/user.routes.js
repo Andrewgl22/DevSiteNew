@@ -37,19 +37,6 @@ module.exports = (app) => {
     app.get('/api/loggedUser', Dev.getLoggedUser)
     app.get('/api/logout', Dev.logOut);
 
-    app.post('/api/newchat', checkUser, Dev.createChat)
-
-    //gets all messages related to logged user
-    app.get('/api/getAllChats', checkUser, Dev.getInbox)
-
-
-    app.get('/api/count/:id', Dev.count)
-
-    //grabs specific chat conversation into private room
-    app.get('/api/messages/:id/:id2', checkUser, Dev.getFullMessage)
-    app.get('/api/messages/:id', checkUser, Dev.getInbox)
-    app.delete('/api/messages/delete/:id', Dev.deleteChat)
-
     app.delete('/api/dev/delete/:id', Dev.deleteDev)
 
     //sends form photo through multer and uploads to S3

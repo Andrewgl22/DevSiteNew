@@ -17,7 +17,7 @@ const Header = () => {
     // aeaf6051401d7ba03d6e145474d1b21d
 
     // count of unread messages
-    const [count, setCount] = useState()
+    const [count, setCount] = useState([])
 
     const logoutHandler = () => {
         localStorage.clear()
@@ -30,21 +30,14 @@ const Header = () => {
     //look through all chats that have this users ID, find all with unread messages,
     // and count those messages. Function should return the number of messages only.
     // Should be updatable immediately as more message get sent. In a useEffect.
-
-    const countUnreadMessages = () => {
-        axios.get('http://localhost:8000/api/count/' + loggedUser1._id)
-        .then((res)=>{
-            // let obs = Object.values(res)
-            // setCount(obs)
-            // console.log(res)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    }
-
     useEffect(()=>{
-        countUnreadMessages()
-    })
+            axios.get('http://localhost:8000/api/chats/count/' + loggedUser1._id)
+            .then((res)=>{
+                setCount(res.data)
+            }).catch((err)=>{
+                console.log(err)
+            })
+    },[])
 
     return(
         <Container fluid className="p-0">
@@ -53,9 +46,15 @@ const Header = () => {
                     <Nav className="ml-auto" >
                     <img src={"http://localhost:8000/images/" + loggedUser1.imageKey} alt="" className="avatar avatar-sm rounded-circle mr-2" style={{height:"45px",width:"45px"}}  />
                         <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                        <Nav.Link href="/messages/2">Messages<span className="badge counter">0</span></Nav.Link>    
+                        <Nav.Link href="/messages/2">Messages<span class="badge counter">{count}</span></Nav.Link>    
                         <Nav.Link onClick={logoutHandler} className="ml-auto">Logout</Nav.Link>
                     </Nav>
+                    {/* <Nav.Item>
+                        <Link to='/dashboard' />
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Link to='/logout' />
+                    </Nav.Item> */}
                 </Navbar>
         </Container>
     )

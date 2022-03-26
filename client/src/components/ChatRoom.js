@@ -11,7 +11,7 @@ import {
     Button,
 } from 'react-bootstrap';
 
-const socket = io('http://localhost:8000')
+// const socket = io('http://localhost:8000')
 
 const ChatRoom = () => {
     //this is the receiving user id coming from the url when you click on the message in the inbox
@@ -26,51 +26,85 @@ const ChatRoom = () => {
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
 
-        //grabs the 2nd user document using id from URL and stores in state
-        useEffect(()=>{
-            axios.get('http://localhost:8000/api/dev/' + id)
-            .then((res)=>{
-                setUser2(res.data)
-            })
-            .catch((err)=>console.log(err))
-        },[])
+    //grabs the 2nd user document using id from URL and stores in state
+    useEffect(()=>{
+        axios.get('http://localhost:8000/api/dev/' + id)
+        .then((res)=>{
+            setUser2(res.data)
+        })
+        .catch((err)=>console.log(err))
+    },[])
 
     //requests the Chat document between these 2 users from db and stores them in messages
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/messages/` + loggedUser1._id + '/' + id) 
+        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + id) 
         .then((res)=>{
             setMessages(res.data[0]["conversation"])
         })
         .catch((err)=>console.log(err))
-    },[messages])
+    // },[messages])    <== if we set the messages, it will update the state and cause an infinite loop
+    },[id, loggedUser1])
 
     const [socket] = useState(()=>io(':8000'))
 
     useEffect(() => {
         socket.on('Welcome', data => console.log(data));
 
-        return () => socket.disconnect(true);
-    }, []);
-
-    //when we receive message from socket server 
-    //*(can all event listeners be in one use effect?)
-    useEffect(()=>{
+        //when we receive message from socket server 
+        //*(can all event listeners be in one use effect?)  <== YES!
         socket.on("message", (msg) =>
             setMessages(prevMessages => {
                 return [...prevMessages, msg]
             })
-    )},[])
+        );
+
+        return () => socket.disconnect(true);
+    }, []);
+
+    // function to update all messages to loggedInUser
+    // to be unread:false
+    // useEffect(()=>{
+        
+    /* 
+        for(let i=0;i<messages.length;i++){
+            if(messages[i].to == loggedInUser._id && unread == true){
+                messages[i].unread = false
+            }
+        }
+        axios.put()
+
     
+    
+    
+    db.chats.aggregate([{$match:{user_ids:$all:{}}},{},{},{}])
+    
+    
+    */
+
+    
+
+    // })
+
     //when we send message to socket server
     const submitHandler = (e) => {
         e.preventDefault();
-        socket.emit('clientEvent', {from:loggedUser1._id, to:id, key:loggedUser1.imageKey, name1:loggedUser1.name, name2:user2.name, msg:newMsg, unread:true, time:dateformat(new Date(), "dddd, h:MM TT" )})
+        socket.emit('clientEvent', {
+            from:loggedUser1._id, 
+            to:id, 
+            key:loggedUser1.imageKey, 
+            name1:loggedUser1.name, 
+            name2:user2.name, 
+            msg:newMsg, 
+            unread:true, 
+            time:dateformat(new Date(), "dddd, h:MM TT" )
+        })
         e.target.reset();    
     }
 
 
     return(
-        <Container fluid className="App m-0 p-0 pt-3 bg-light mx-0">
+        <Container fluid className="App m-0 p-0 bg-light mx-0">
+            
             <Row nogutter className="h-100">
             <Col className="">
             { user2.name ? <h1>Send a message to {user2.name}</h1>: null}

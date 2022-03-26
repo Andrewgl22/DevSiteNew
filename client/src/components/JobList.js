@@ -39,7 +39,7 @@ const JobList = () => {
     
 
     return(
-        <div className="ml-5 justify-content-between border border-dark" style={{overflow:"scroll", height:"430px"}}>
+        <div className="ml-5 p-3 justify-content-between border border-dark" style={{overflow:"scroll", height:"430px"}}>
             <h3>Open Jobs</h3>
             {jobList.sort((a,b)=>a.perc < b.perc ? 1:-1).map((job,idx)=>(
                 <p style={{color:"black"}} key={idx}><b>{job.company}-</b><Link to={`/jobpost/${job._id}`} className="job-link" >{job.position} <span style={{color:switchStyle(job.perc)}}>{job.perc} %</span></Link></p>              

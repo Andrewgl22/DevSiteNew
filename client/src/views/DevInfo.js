@@ -37,7 +37,7 @@ const DevInfo = () => {
     },[])
 
     return(
-        <Container fluid>
+        <Container fluid className="mt-4">
             <Row className="d-flex justify-content-center align-items-center">
                 <Col className="col-4">  
                 {dev.imageKey ?

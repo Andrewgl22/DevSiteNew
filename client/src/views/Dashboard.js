@@ -40,6 +40,7 @@ const Dashboard = (props) => {
                     <Col className="p-0">
                     <div className="mt-2 p-3" style={{backgroundColor:"lightblue"}}>
                     <p>Copyright 2021 Andrew Lederman. This site is hosted at: <a href="#">Herokuapp.com</a></p>
+                    <a href="https://github.com/Andrewgl22/DevSite" target="_blank">Github</a>
                 </div>
                     </Col>
                 </Row>

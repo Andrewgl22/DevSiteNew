@@ -1,4 +1,4 @@
-const mongoose = require("mongoos")
+const mongoose = require("mongoose")
 
 const jobSchema = new mongoose.Schema({
     //need to store id and name of creator
@@ -34,3 +34,6 @@ const jobSchema = new mongoose.Schema({
         type:[String]
     }
 }, {timestamps:true})
+
+const Job = mongoose.model("Job", jobSchema)
+module.exports= Job;

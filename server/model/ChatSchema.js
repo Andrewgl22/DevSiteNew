@@ -2,12 +2,12 @@ const mongoose = require("mongoose")
 
 const conversationSchema = new mongoose.Schema({
     from: String,
-    /Users/andrewlederman/Desktop/Dojo/DojoTA/finalProjUpdate/client
+    to: String,
     key: String, 
     message: String,
     unread: {
         type:Boolean,
-        default:true
+        default:true,
     }
     }, {timestamps:true}
 )
@@ -22,3 +22,8 @@ const userchatSchema = new mongoose.Schema({
     id: String,
     name: String
 })
+
+const Chat = mongoose.model("Chat",chatSchema)
+const Convo = mongoose.model("Convo", conversationSchema)
+
+module.exports={Chat, Convo, chatSchema};
