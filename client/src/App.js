@@ -10,8 +10,7 @@ import Register from './components/Register';
 import DevInfo from './views/DevInfo'
 import Messages from './components/Messages';
 import ChatRoom from './components/ChatRoom';
-import MainLayout from './components/layout/MainLayout';
-import LogRegLayout from './components/layout/LogRegLayout';
+import {MainLayout, LogRegLayout} from './components/layout/MainLayout';
 import './App.css';
 import { Container } from 'react-bootstrap';
 import {
@@ -33,28 +32,41 @@ function App() {
 
   return (
     <IconProvider>
-        <Header />
+        {/* <Header /> */}
       <Router history={history}>
           <Switch>
             
-            <Route path="/" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-        
-        
-              {/* Index leads to register page now */}
-              <Route path="/wizard" exact component={DevSignUp} />
-              <Route path="/logout" exact component={Login} />
-              <Route path="/register" exact component={Register} />
-              <Route path="/dashboard" exact component={Dashboard} />
-              <Route path="/addJob" component={JobForm} />
-              <Route path="/jobpost/:id" exact component={JobPost} />
-              <Route path="/devinfo/:id" exact component={DevInfo} />
-              <Route path="/messages/:id" exact component={Messages} />
-              <Route path="/chatroom/:id" exact component={ChatRoom} />
-            
+            {/* Log/Reg */}
+            <RouteWrapper path="/" exact component={Register} layout={LogRegLayout} />
+            <RouteWrapper path="/login" exact component={Login} layout={LogRegLayout} />
+            <RouteWrapper path="/register" exact component={Register} layout={LogRegLayout} />
+
+            <RouteWrapper path="/wizard" exact component={DevSignUp} layout={LogRegLayout} />
+            <RouteWrapper path="/logout" exact component={Login} layout={MainLayout} />
+            <RouteWrapper path="/dashboard" exact component={Dashboard} layout={MainLayout} />
+            <RouteWrapper path="/addJob" component={JobForm} layout={MainLayout} />
+            <RouteWrapper path="/jobpost/:id" exact component={JobPost} layout={MainLayout} />
+            <RouteWrapper path="/devinfo/:id" exact component={DevInfo} layout={MainLayout} />
+            <RouteWrapper path="/messages/:id" exact component={Messages} layout={MainLayout} />
+            <RouteWrapper path="/chatroom/:id" exact component={ChatRoom} layout={MainLayout} />
+          
           </Switch>
         </Router>
     </IconProvider>
+  );
+}
+
+function RouteWrapper({
+  component: Component, 
+  layout: Layout, 
+  ...rest
+}) {
+  return (
+    <Route {...rest} render={(props) =>
+      <Layout {...props}>
+        <Component {...props} />
+      </Layout>
+    } />
   );
 }
 

@@ -33,7 +33,6 @@ module.exports.deleteOne = (req,res) => {
 }
 
 module.exports.register = (req,res) => {
-    console.log('register new user');
     let user = new Dev(req.body);
     console.log(user);
     user.save()
@@ -51,13 +50,21 @@ module.exports.register = (req,res) => {
 module.exports.deleteDev = (req,res) => {
     Dev.deleteOne({_id:req.params.id})
     .then((req) => res.json(req))
-    .catch((err) => console.log(err))
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    })
 }
 
 module.exports.createJob = (req,res) => {
-    Job.create(req.body)
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
+    let job = new Job(req.body)
+    job.save()
+        .then((req)=>res.json(req))
+        .catch((err) => {
+            console.log("Error in create job")
+            console.log(err);
+            res.status(400).json(err);
+        })
 }
 
 // use matchJobPercentage function here

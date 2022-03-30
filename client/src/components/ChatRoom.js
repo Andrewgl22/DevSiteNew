@@ -17,6 +17,8 @@ const ChatRoom = () => {
     //this is the receiving user id coming from the url when you click on the message in the inbox
     const {id} = useParams();
 
+    const [id2,setId2] = useState(id)
+
     const [user2,setUser2] = useState({})
 
     const [messages, setMessages] = useState([]);
@@ -35,9 +37,19 @@ const ChatRoom = () => {
         .catch((err)=>console.log(err))
     },[])
 
+    // change unread flag for all messages to loggedUser1
+    useEffect(()=> {
+        for(let i=0;i<messages.length;i++){
+            if(messages[i].unread == true && messages[i].from == user2._id ){
+                messages[i].unread = false;
+            }
+        }
+        axios.post('http://localhost:8000/api/chats/update',{messages})
+    })
+
     //requests the Chat document between these 2 users from db and stores them in messages
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + id) 
+        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + user2._id) 
         .then((res)=>{
             setMessages(res.data[0]["conversation"])
         })
@@ -107,7 +119,7 @@ const ChatRoom = () => {
             
             <Row nogutter className="h-100">
             <Col className="">
-            { user2.name ? <h1>Send a message to {user2.name}</h1>: null}
+            { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
                 <form onSubmit={submitHandler}>
                 <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
                 <input type='submit' className="mt-3"/>
@@ -118,7 +130,7 @@ const ChatRoom = () => {
                     { messages ? messages.map((message,idx)=>(
                         // {message.from == user2._id ? "margin-left:30px" : null}
                         <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
-                        '0px'}} className='message justify-content-start align-items-left p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{loggedUser1.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
+                        '0px'}} className='message justify-content-start align-items-left p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from == loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
                     )) : null}
                 </Col>
             </Row>

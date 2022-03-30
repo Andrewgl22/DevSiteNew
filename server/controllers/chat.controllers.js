@@ -9,9 +9,21 @@ module.exports.createChat = (req,res) => {
 }
 
 module.exports.getInbox = (req,res) => {
-    Chat.find({})
+	// find chat with 
+    Chat.find({$expr: {
+		$in: [req.params.id, "$user_ids"]
+	}}) 
     .then((req)=>res.json(req))
     .catch((err)=>console.log(err))
+}
+
+module.exports.getAll = (req,res) => {
+	Chat.find()
+	.then((req)=>{
+		res.json(req);
+	}).catch((err)=>{
+		console.log(err)
+	})
 }
 
 module.exports.getFullMessage = (req,res) => {

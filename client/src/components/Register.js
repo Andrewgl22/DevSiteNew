@@ -73,31 +73,22 @@ const Register = () => {
                 <Form.Group controlId="formBasicName" >
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your name" onChange={(e)=> setName(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        You're almost there!
-                    </Form.Text>
                 </Form.Group>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" placeholder="johndoe@gmail.com" onChange={(e)=> setEmail(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        You're almost there!
-                    </Form.Text>
+                
                 </Form.Group>
                 <Form.Group controlId="formBasicAddress">
                     <Form.Label>Address</Form.Label>
                     <Form.Control type="text" placeholder="12345 Main Street" onChange={(e)=> setAddress(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        We won't share this with anyone
-                    </Form.Text>
+                    
                 </Form.Group>
                 <Row>
                 <Form.Group controlId="formBasicCity" className="col-8">
                     <Form.Label>City</Form.Label>
                     <Form.Control type="text" placeholder="City" onChange={(e)=> setCity(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        We won't share this with anyone
-                    </Form.Text>
+                
                 </Form.Group>
                 <Form.Group controlId="formBasicState" className="col-4">
                     <Form.Label>State</Form.Label>
@@ -112,9 +103,7 @@ const Register = () => {
                             })
                         }
                     </Form.Control>
-                    <Form.Text className="text-muted">
-                        We won't share this with anyone
-                    </Form.Text>
+                    
                 </Form.Group>
                 <Form.Group className="col-6">
                     <Form.Label>Password</Form.Label>

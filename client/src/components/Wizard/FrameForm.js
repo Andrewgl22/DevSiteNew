@@ -13,7 +13,7 @@ const FrameForm = ({setIconComp, skillsArr, setSkillsArr}) => {
     const setSkill = (val) =>{
         if(skillsArr.length===10){return}
         if(skillsArr.includes(val)){return}
-        setProgressValue(progressValue + 8.3);
+        setProgressValue(progressValue + 4);
         setSkillsArr([...skillsArr,val]);   
     } 
 

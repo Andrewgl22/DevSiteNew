@@ -51,13 +51,23 @@ const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgress
     }
 
     const siteChange = (val) => {
-        setGithub(val);
-        setProgressValue(progressValue + 3);
+        if(github !== ""){
+            return
+        }
+        else{
+            setGithub(val);
+            setProgressValue(progressValue + 10);
+        }
     }
 
     const webChange = (val) => {
-        setWebsite(val);
-        setProgressValue(progressValue + 3);
+        if(website !== ""){
+            return
+        }
+        else{
+            setWebsite(val);
+            setProgressValue(progressValue + 10);
+        }
     }
 
     return(

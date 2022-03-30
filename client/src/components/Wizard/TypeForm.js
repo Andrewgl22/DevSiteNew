@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TypeForm = ({setType, setIconComp}) => {
+const TypeForm = ({setType, setIconComp,progressValue, setProgressValue}) => {
 
     const empHandler = () => {
         setType('employer')

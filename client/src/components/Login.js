@@ -34,9 +34,7 @@ const Login = () => {
         history.push('/dashboard')
     } catch(err) {
         const errorResponse = err.response.data.message;
-        
         setErrors(errorResponse);
-
         console.log('error')
     }
     }
@@ -48,7 +46,7 @@ const Login = () => {
                 <h1>Login</h1>
                 <Link to="/register">Register Here</Link>
                 
-                    <Form className="w-50 mx-auto">
+                    <Form className="w-50 mx-auto" type="">
                         <p className="text-danger">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>

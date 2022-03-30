@@ -44,7 +44,7 @@ const JobForm = () => {
 
     const submitHandler = async (e) => {
         try {
-            e.preventDefault()
+            // e.preventDefault()
             const result = await axios.post("http://localhost:8000/api/createJob", {
                 createdBy:{
                     id:loggedUser1._id,
@@ -59,20 +59,21 @@ const JobForm = () => {
                 history.push('/dashboard')
         } catch(err) {
             const errorResponse = err.response.data.errors;
+            console.log(errorResponse)
             const errorArr = []; 
             for (const key of Object.keys(errorResponse)) { 
                 errorArr.push(errorResponse[key].message)
             }
-                // Set Errors
             setErrors(errorArr);
+            // setErrors(err.response.data.errors)
 
         }
     }
 
     return(
-        <Container className="p-5 bg-light mx-5" fluid>
-            <Row>
-                <Col className="col-md-4">
+        <Container className="p-5 bg-light" fluid>
+            <Row className="mx-auto border w-75 p-4 ">
+                <Col className="col-md-4 offset-2">
                 <h3>Add A Job</h3>
                     <Form>
                     {errors.map((err, index) => <p key={index} class="text-danger">{err}</p>)}
@@ -99,7 +100,7 @@ const JobForm = () => {
                 <Col>
                 <div className="form-box">
             <h2>Technologies</h2>
-            <div className="iconBox col-5">
+            <div className="iconBox col-10">
             <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')}  />
                 <img src={enumObj.css} alt="" height="40" width="40" value="css" onClick={()=>setSkill('css')} />
                 <img src={enumObj.js} alt="" height="40" width="40" value="js" onClick={()=>setSkill('js')} />
@@ -117,13 +118,13 @@ const JobForm = () => {
             </div>
 
         </div>
-        <div className="col-6 offset-1 ml-5">
-            {skillsArr.map((skill,idx)=>(
-                <>
-                    <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" className="mb-2 mr-1" value={`${skill}`} />
-                </> 
-            ))}
-        </div>
+            <div className="col-6 offset-1 ml-5">
+                {skillsArr.map((skill,idx)=>(
+                    <>
+                        <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" className="mb-2 mr-1" value={`${skill}`} />
+                    </> 
+                ))}
+            </div>
                 </Col>
             </Row>
             

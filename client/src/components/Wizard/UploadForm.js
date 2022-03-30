@@ -40,7 +40,7 @@ const UploadForm = ({setProfilePhoto, setIconComp,progressValue, setProgressValu
             const result = await axios.post(url, formData, {headers:{"Content-Type": "multipart/form-data"}})
             console.log("The key is" + result.data.imageKey)
             setProfilePhoto(result.data.imageKey)
-            setProgressValue(progressValue + 10)
+            setProgressValue(progressValue + 30)
             setIconComp("siteForm")
             return result.data
         } catch {

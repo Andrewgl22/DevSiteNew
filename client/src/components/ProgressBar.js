@@ -6,11 +6,23 @@ const ProgressBar = (props) => {
     const {progress} = useContext(IconContext)
     const [progressVal] = progress;
 
+    const progColor = () => {
+        if(progressVal < 33){
+            return "bg-danger"
+        } else if(progressVal >= 80){
+            return "bg-success"
+        }
+        
+        else if(33 < progressVal < 80){
+            return "bg-warning"
+        }
+    }
+
     
  
     return (
         <div className="progress mb-3 ml-2 mt-3" style={{width: "20%"}}>
-            <div className={`progress-bar ${progressVal < 33 ? "bg-danger" : "bg-warning"} ${progressVal > 66 ? "bg-success" : "bg-warning"}`} role="progressbar" style={{width: `${progressVal}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{Math.round(progressVal)}%</div>
+            <div className={`progress-bar ${progColor()} `} role="progressbar" style={{width: `${progressVal}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{Math.round(progressVal)}%</div>
         </div>
     )
   };

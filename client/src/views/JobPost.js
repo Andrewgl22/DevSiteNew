@@ -49,7 +49,7 @@ const JobPost = (props) => {
     // }
 
     return(
-        <Container fluid className="m-0 p-0 bg-light pb-5">
+        <Container fluid className="m-0 pt-3 p-0 bg-light pb-5">
             <Row>
                 <Col className="col-md-12"></Col>
                 {console.log(id)}

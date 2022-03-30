@@ -6,7 +6,7 @@ import {
     Button
 } from 'react-bootstrap';
 
-const StackForm = ({setIconComp, setStackType}) => {
+const StackForm = ({setIconComp, setStackType, progressValue, setProgressValue}) => {
 
     // const empHandler = () => {
     //     setIconComp('langForm')
@@ -17,6 +17,7 @@ const StackForm = ({setIconComp, setStackType}) => {
     // }
 
     const submitHandler = (e) => {
+        setProgressValue(progressValue + 10)
         setIconComp('langForm')
     }
 

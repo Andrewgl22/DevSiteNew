@@ -69,12 +69,12 @@ const DevForm = (props) => {
         <Container fluid className="m-0 h-100 px-0">
             <Row>
                 <Col className="col-sm-12 m-0 p-0">
-                <Navbar className="bg-success">
+                {/* <Navbar className="bg-success">
                         <Navbar.Brand>Dev Site</Navbar.Brand>
                         <Nav variant="tabs" className="ml-auto">
                         <Nav.Link onclick={logoutHandler}>Logout</Nav.Link>
                         </Nav>
-                    </Navbar>
+                    </Navbar> */}
                 </Col>
             </Row>
             <Row className="ml-5 mt-3 justify-content-center">
@@ -87,11 +87,11 @@ const DevForm = (props) => {
                 switch (iconComp) {
                     case 'typeForm':
                         return(
-                            <TypeForm type={type} setType={setType} setIconComp={setIconComp}/>
+                            <TypeForm type={type} setType={setType} setIconComp={setIconComp} />
                         )
                     case 'stackForm':
                         return(
-                            <StackForm setStackType={setStackType} setIconComp={setIconComp} />
+                            <StackForm setStackType={setStackType} setIconComp={setIconComp} progressValue ={progressValue} setProgressValue={setProgressValue} />
                         )            
                     case 'langForm':
                         return (

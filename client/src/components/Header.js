@@ -21,10 +21,11 @@ const Header = () => {
 
     const logoutHandler = () => {
         localStorage.clear()
-        axios.get('http://localhost:8000/api/logout')
-        .then((res)=>{
-            history.push('/login')
-        }).catch((err)=>console.log(err))
+        history.push('/login')
+        // axios.get('http://localhost:8000/api/logout')
+        // .then((res)=>{
+        //     history.push('/login')
+        // }).catch((err)=>console.log(err))
     }
 
     //look through all chats that have this users ID, find all with unread messages,
@@ -43,11 +44,11 @@ const Header = () => {
         <Container fluid className="p-0">
                 <Navbar className="bg-secondary">
                     <Navbar.Brand><b>DevHyre</b></Navbar.Brand>
-                    <Nav className="ml-auto" >
+                    <Nav className="ml-auto d-flex align-items-center" >
                     <img src={"http://localhost:8000/images/" + loggedUser1.imageKey} alt="" className="avatar avatar-sm rounded-circle mr-2" style={{height:"45px",width:"45px"}}  />
-                        <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                        <Nav.Link href="/messages/2">Messages<span class="badge counter">{count}</span></Nav.Link>    
-                        <Nav.Link onClick={logoutHandler} className="ml-auto">Logout</Nav.Link>
+                        <Link to="/dashboard" class="text-light m-1">Dashboard</Link>
+                        <Link to="/messages/2" class="text-light m-2">Messages<span class="badge counter">{count}</span></Link>    
+                        <Link onClick={logoutHandler} className="ml-auto text-light">Logout</Link>
                     </Nav>
                     {/* <Nav.Item>
                         <Link to='/dashboard' />
