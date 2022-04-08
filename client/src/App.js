@@ -5,18 +5,15 @@ import Dashboard from './views/Dashboard';
 import DevSignUp from './views/DevSignUp';
 import JobPost from './views/JobPost';
 import Login from './components/Login';
-import Header from './components/Header'
 import Register from './components/Register';
 import DevInfo from './views/DevInfo'
 import Messages from './components/Messages';
 import ChatRoom from './components/ChatRoom';
 import {MainLayout, LogRegLayout} from './components/layout/MainLayout';
 import './App.css';
-import { Container } from 'react-bootstrap';
 import {
   Route,
   Switch,
-  Redirect,
   BrowserRouter as Router,
 } from 'react-router-dom';
 import {createBrowserHistory} from 'history'

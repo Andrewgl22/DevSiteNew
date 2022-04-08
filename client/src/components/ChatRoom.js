@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {useParams, Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { io } from 'socket.io-client';
 import dateformat from 'dateformat';
-import Header from './Header';
 import {
     Container,
     Row,
     Col,
-    Button,
 } from 'react-bootstrap';
+import {IconContext} from './IconProvider';
 
 // const socket = io('http://localhost:8000')
 
@@ -18,6 +17,10 @@ const ChatRoom = () => {
     const {id} = useParams();
 
     const [id2,setId2] = useState(id)
+
+    const {msgUpdate} = useContext(IconContext);
+
+    const [msgToggle, setMsgToggle] = msgUpdate;
 
     const [user2,setUser2] = useState({})
 
@@ -39,13 +42,17 @@ const ChatRoom = () => {
 
     // change unread flag for all messages to loggedUser1
     useEffect(()=> {
-        for(let i=0;i<messages.length;i++){
-            if(messages[i].unread == true && messages[i].from == user2._id ){
-                messages[i].unread = false;
-            }
-        }
-        axios.post('http://localhost:8000/api/chats/update',{messages})
-    })
+        axios.get(`http://localhost:8000/api/chats/update/` + loggedUser1._id + '/' + user2._id)
+        .then((res)=>{
+            setMsgToggle(!msgToggle)
+            console.log("messages updated and flag is now: " + msgToggle)
+        }).catch((err)=>{
+            console.log(err)
+        })
+        // passing in state as dependency that is
+        // being used in this useEffect will create
+        // an infinite loop just like I saw (messages)
+    },[])
 
     //requests the Chat document between these 2 users from db and stores them in messages
     useEffect(()=>{
@@ -100,6 +107,7 @@ const ChatRoom = () => {
     //when we send message to socket server
     const submitHandler = (e) => {
         e.preventDefault();
+        debugger;
         socket.emit('clientEvent', {
             from:loggedUser1._id, 
             to:id, 
@@ -115,29 +123,27 @@ const ChatRoom = () => {
 
 
     return(
-        <Container fluid className="App m-0 p-0 bg-light mx-0">
-            
-            <Row nogutter className="h-100">
-            <Col className="">
-            { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
-                <form onSubmit={submitHandler}>
-                <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
-                <input type='submit' className="mt-3"/>
-                </form>
-            <Row className="align-items-center justify-content-center h-25">
-                
-                <Col className="col-6 col-md-6 col-xs-12 offset-3 chatbox overflow-auto">
-                    { messages ? messages.map((message,idx)=>(
-                        // {message.from == user2._id ? "margin-left:30px" : null}
-                        <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
-                        '0px'}} className='message justify-content-start align-items-left p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from == loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
-                    )) : null}
-                </Col>
-            </Row>
-        </Col>
-            </Row>
-        </Container>
+    <>        
+        <Row nogutter="true" className="m-0 p-0 bg-light mx-0">
+            <Col className="text-center d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
+                { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
+                    <form onSubmit={submitHandler} className="mb-3">
+                        <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
+                        <input type='submit' className="mt-3"/>
+                    </form>
+            </Col>
+        </Row>
+        <Row className="d-flex justify-content-center bg-light">
+            <Col className="text-center col-12 col-sm-3 h-25 justify-content-center">
+                { messages ? messages.map((message,idx)=>(
+                    // {message.from == user2._id ? "margin-left:30px" : null}
+                    <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
+                    '0px'}} className='message p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from === loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
+                )) : null}
+            </Col>
+        </Row>
 
+    </>
     )
 }
 

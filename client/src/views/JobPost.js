@@ -10,11 +10,10 @@ import {
     OverlayTrigger,
     Tooltip
 } from 'react-bootstrap';
-import Header from '../components/Header'
 
 const JobPost = (props) => {
     const [job, setJob] = useState({})
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
     const history = useHistory()
 
@@ -50,12 +49,12 @@ const JobPost = (props) => {
 
     return(
         <Container fluid className="m-0 pt-3 p-0 bg-light pb-5">
-            <Row>
+            {/* <Row>
                 <Col className="col-md-12"></Col>
                 {console.log(id)}
-            </Row>
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col className="col-4">
+            </Row> */}
+            <Row className=" d-flex justify-content-center align-items-center">
+                <Col className="col-12 col-md-8 col-lg-4">
                     <Col className="col">
                         <h1>{job.position}</h1>
                         <p>{job.company}</p>

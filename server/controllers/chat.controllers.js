@@ -42,13 +42,21 @@ module.exports.count = (req,res) => {
     Chat.aggregate([{$match:{user_ids:req.params.id}},{$unwind:"$conversation"},{$match:{"conversation.to":req.params.id}},{$group:{_id:"$conversation.unread",count:{$sum:1}}},{$match:{_id:true}}])
 	.then((req)=>{
 		console.log("count: " + req[0].count)
-		res.json(req[0].count)
+		res.json(req[0].count)	
 	})
 	.catch((err) => console.log(err))
 }
 
 module.exports.updateUnread = (req,res) => {
-	
+	Chat.findOneAndUpdate({user_ids:{$all: [req.params.id,req.params.id2]}},{"$set": {"conversation.$[elem].unread":"false"}},{"arrayFilters": [{"elem.from":req.params.id2}]})
+	.then((req)=>{
+		res.json(req)
+	}).catch((err)=>{
+		console.log(err)
+	})
+	// grab chat document
+	// Chat.find({})
+	// update the conversation array with messages array from client
 }
 
 module.exports.addConversation = (io, data) => {

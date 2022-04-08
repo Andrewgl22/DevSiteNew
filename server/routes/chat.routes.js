@@ -14,7 +14,7 @@ module.exports = (app) => {
 	app.delete('/api/chats/messages/delete/:id', Chat.deleteChat)
 
 	app.get('/api/chats/count/:id', Chat.count)
-    app.put('/api/chats/update', Chat.updateUnread);
+    app.get('/api/chats/update/:id/:id2', Chat.updateUnread);
 
 
 }

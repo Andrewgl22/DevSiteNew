@@ -57,7 +57,7 @@ let clientSocketIds = []
 let connectedUsers = []
 
 io.on("connection", (socket) => {
-    console.log("New connection at" + socket.id);
+    // console.log("New connection at" + socket.id);
 
     socket.on("clientEvent", (data) => {
         ChatController.addConversation(io, data);

@@ -22,6 +22,7 @@ export const IconProvider = (props) => {
 
         const [progress,setProgress] = useState(0)
         const [loggedUser, setLoggedUser] = useState({})
+        const [msgUpdate,setMsgUpdate] = useState(false)
     
     
         const [enumObj, setEnumObj] = useState({
@@ -43,7 +44,8 @@ export const IconProvider = (props) => {
         return(
             <IconContext.Provider value={{
                 icons:[enumObj,setEnumObj], 
-                progress:[progress, setProgress], 
+                progress:[progress, setProgress],
+                msgUpdate: [msgUpdate,setMsgUpdate], 
                 user:[loggedUser,setLoggedUser]}}>
                 {props.children}
             </IconContext.Provider>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {IconContext} from './IconProvider';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import {Link, Redirect, useHistory} from 'react-router-dom';
 import Header from './Header'
@@ -40,7 +39,7 @@ const Messages = () => {
     return(
         <Container fluid className="m-0 p-0">
             <Row className="align-items-center justify-content-center">
-                <Table className="bordered table-striped col-6">
+                <Table className="bordered table-striped col-10 col-sm-6 ">
                     <th>
                         <p>Messages</p>
                     </th>

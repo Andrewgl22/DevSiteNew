@@ -48,7 +48,7 @@
 .message {
   border:2px solid gray;
   border-radius:15px;
-  margin:20px;
+  /* margin:20px; */
   width:200px;
   background-color:beige;
   
@@ -131,7 +131,7 @@
 }
 
 .chatbox {
-  display:block;
+  /* display:block; */
   overflow:hidden;
   height:500px;
 }
@@ -171,8 +171,7 @@
   text-decoration:none;
   color:black;
   padding:5px;
-  margin-top:50px;
-  margin-right:600px;
+  margin-bottom:10px;
 }
 
 .job-list {

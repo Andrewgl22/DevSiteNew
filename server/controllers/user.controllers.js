@@ -154,7 +154,7 @@ module.exports.getLoggedUser = (req,res) => {
 module.exports.getapi = async (req,res) => {
     try {
         const key = process.env.DATA_API_KEY;
-        console.log(key);
+        // console.log(key);
         const result = await axios.get(`https://newsapi.org/v2/everything?q=programming&apiKey=${key}`);
         return res.json(result.data);
     } catch {
@@ -168,7 +168,7 @@ module.exports.uploadPhoto = async (req,res) => {
         console.log(req.file)
         const file = req.file
         const result = await uploadFile(file)
-        console.log(result)
+        // console.log(result)
         res.json({imageKey: result.key})
     } catch(err) {
         console.error(err)

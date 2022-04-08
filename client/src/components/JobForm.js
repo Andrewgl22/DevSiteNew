@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import axios from 'axios';
-import {useHistory, Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {IconContext} from './IconProvider';
 import {
     Container,
@@ -9,10 +9,6 @@ import {
     Form,
     Button
 } from 'react-bootstrap';
-// import CodeNews from './CodeNews'
-import Header from './Header'
-import LangForm from './Wizard/LangForm';
-import FrameForm from './Wizard/FrameForm';
 
 const JobForm = () => {
 
@@ -70,10 +66,9 @@ const JobForm = () => {
         }
     }
 
-    return(
-        <Container className="p-5 bg-light" fluid>
-            <Row className="mx-auto border w-75 p-4 ">
-                <Col className="col-md-4 offset-2">
+    return(     
+            <Row className="mx-auto w-75 p-4 ">
+                <Col className="col-10 col-sm-4 offset-2">
                 <h3>Add A Job</h3>
                     <Form>
                     {errors.map((err, index) => <p key={index} class="text-danger">{err}</p>)}
@@ -94,41 +89,39 @@ const JobForm = () => {
                             <Form.Control type="text" placeholder="Location" onChange={(e)=> setLocation(e.target.value)}></Form.Control>
                         </Form.Group>
                         <Form.Control type="hidden" name="userId" value={loggedUser1._id} />
-                        <Button onClick={submitHandler}>Submit</Button>
                     </Form>
                 </Col>
-                <Col>
-                <div className="form-box">
-            <h2>Technologies</h2>
-            <div className="iconBox col-10">
-            <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')}  />
-                <img src={enumObj.css} alt="" height="40" width="40" value="css" onClick={()=>setSkill('css')} />
-                <img src={enumObj.js} alt="" height="40" width="40" value="js" onClick={()=>setSkill('js')} />
-                <img src={enumObj.ruby} alt="" height="40" width="40" value="ruby" onClick={()=>setSkill('ruby')} />
-                <img src={enumObj.python} alt="" height="40" width="40" value="python" onClick={()=>setSkill('python')} />
-                <img src={enumObj.java} alt="" height="40" width="40" value="java" onClick={()=>setSkill('java')} />
-                <img src={enumObj.swift} alt="" height="40" width="40" value="swift" onClick={()=>setSkill('swift')} />
-                <img src={enumObj.angular} alt="" height="40" width="40" value="html" onClick={()=>setSkill('angular')} />
-                    <img src={enumObj.bootstrap} alt="" height="40" width="40" value="css" className="mr-1" onClick={()=>setSkill('bootstrap')} />
-                    <img src={enumObj.django} alt="" height="40" width="40" value="js" onClick={()=>setSkill('django')} />
-                    <img src={enumObj.react} alt="" height="40" width="40" value="ruby" onClick={()=>setSkill('react')} />
-                    <img src={enumObj.jquery} alt="" height="40" width="40" value="python" onClick={()=>setSkill('jquery')} />
-                    <img src={enumObj.node} alt="" height="40" width="40" value="java" onClick={()=>setSkill('node')} />
-                    <img src={enumObj.vue} alt="" height="40" width="40" value="java" onClick={()=>setSkill('vue')} />
-            </div>
+                <Col className="text-center">
+                <div className="form-box col-12 col-sm-10">
+                    <h2>Technologies</h2>
+                    <div className="iconBox col-12">
+                        <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')}  />
+                            <img src={enumObj.css} alt="" height="40" width="40" value="css" onClick={()=>setSkill('css')} />
+                            <img src={enumObj.js} alt="" height="40" width="40" value="js" onClick={()=>setSkill('js')} />
+                            <img src={enumObj.ruby} alt="" height="40" width="40" value="ruby" onClick={()=>setSkill('ruby')} />
+                            <img src={enumObj.python} alt="" height="40" width="40" value="python" onClick={()=>setSkill('python')} />
+                            <img src={enumObj.java} alt="" height="40" width="40" value="java" onClick={()=>setSkill('java')} />
+                            <img src={enumObj.swift} alt="" height="40" width="40" value="swift" onClick={()=>setSkill('swift')} />
+                            <img src={enumObj.angular} alt="" height="40" width="40" value="html" onClick={()=>setSkill('angular')} />
+                                <img src={enumObj.bootstrap} alt="" height="40" width="40" value="css" className="mr-1" onClick={()=>setSkill('bootstrap')} />
+                                <img src={enumObj.django} alt="" height="40" width="40" value="js" onClick={()=>setSkill('django')} />
+                                <img src={enumObj.react} alt="" height="40" width="40" value="ruby" onClick={()=>setSkill('react')} />
+                                <img src={enumObj.jquery} alt="" height="40" width="40" value="python" onClick={()=>setSkill('jquery')} />
+                                <img src={enumObj.node} alt="" height="40" width="40" value="java" onClick={()=>setSkill('node')} />
+                                <img src={enumObj.vue} alt="" height="40" width="40" value="java" onClick={()=>setSkill('vue')} />
+                    </div>
 
-        </div>
-            <div className="col-6 offset-1 ml-5">
-                {skillsArr.map((skill,idx)=>(
-                    <>
-                        <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" className="mb-2 mr-1" value={`${skill}`} />
-                    </> 
-                ))}
-            </div>
+                </div>
+                <div className="col-12 col-sm-8 ml-5">
+                    {skillsArr.map((skill,idx)=>(
+                        <>
+                            <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" className="mb-2 mr-1" value={`${skill}`} />
+                        </> 
+                    ))}
+                </div>
+             <Button onClick={submitHandler}>Submit</Button>
                 </Col>
             </Row>
-            
-        </Container>
     )
 }
 

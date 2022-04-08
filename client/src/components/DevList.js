@@ -29,7 +29,7 @@ const DevList = (props) => {
     },[]);
     
     return(           
-                <Col className="align-items-center mr-0">
+                <Col className="align-items-center order-sm-6 m-5 col-10 col-sm-4">
                 <h4>Featured Devs</h4>
                 <Carousel className="mt-3">
                     {devList.map((dev,idx)=>(
