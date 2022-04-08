@@ -8,6 +8,8 @@ const fs = require('fs');
 // const {Chat, Convo} = require('./model/model');
 const ChatController = require('./controllers/chat.controllers');
 
+app.use(express.static(path.resolve(__dirname, "./client/build")))
+
 //photo upload to server with multer and to AWS S3 with aws-sdk
 // const multer = require('multer');
 // const upload = multer({dest: 'uploads/'})
