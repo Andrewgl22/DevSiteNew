@@ -41,6 +41,9 @@ module.exports.deleteChat = (req,res) => {
 module.exports.count = (req,res) => {
     Chat.aggregate([{$match:{user_ids:req.params.id}},{$unwind:"$conversation"},{$match:{"conversation.to":req.params.id}},{$group:{_id:"$conversation.unread",count:{$sum:1}}},{$match:{_id:true}}])
 	.then((req)=>{
+		if(req[0] ==undefined){
+			return 0;
+		}
 		console.log("count: " + req[0].count)
 		res.json(req[0].count)	
 	})
@@ -50,6 +53,7 @@ module.exports.count = (req,res) => {
 module.exports.updateUnread = (req,res) => {
 	Chat.findOneAndUpdate({user_ids:{$all: [req.params.id,req.params.id2]}},{"$set": {"conversation.$[elem].unread":"false"}},{"arrayFilters": [{"elem.from":req.params.id2}]})
 	.then((req)=>{
+		console.log("Conversation unread updated")
 		res.json(req)
 	}).catch((err)=>{
 		console.log(err)
@@ -60,8 +64,7 @@ module.exports.updateUnread = (req,res) => {
 }
 
 module.exports.addConversation = (io, data) => {
-		console.log('addConversation data:');
-		console.log(data);
+		// console.log('addConversation data:' + data);
 		const chatcheck = Chat.exists({ user_ids: { $all: [ data.to , data.from ] } }).then(function(res){
 				if(res == true){
 						Chat.findOneAndUpdate({ user_ids: { $all: [ data.to , data.from ] } }, 
@@ -78,7 +81,7 @@ module.exports.addConversation = (io, data) => {
 								}
 							)
 								.then(()=> {
-									console.log("Updated existing Chat document with new message")
+									// console.log("Updated existing Chat document with new message")
 									// emit / send the original data out to listening sockets
 									io.emit("message", data);
 								})

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import { io } from 'socket.io-client';
 import dateformat from 'dateformat';
+import Header from './Header';
 import {
     Container,
     Row,
@@ -28,6 +29,8 @@ const ChatRoom = () => {
 
     const [newMsg, setNewMsg] = useState("");
 
+    const [socket] = useState(()=>io(':8000'))
+
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
 
@@ -38,7 +41,32 @@ const ChatRoom = () => {
             setUser2(res.data)
         })
         .catch((err)=>console.log(err))
-    },[])
+    },[id])
+
+    //requests the Chat document between these 2 users from db and stores them in messages
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + user2._id) 
+        .then((req)=>{
+            // console.log(req.data)
+            setMessages(req.data[0].conversation)
+        })
+        .catch((err)=>console.log(err))
+    // },[messages])    <== if we set the messages, it will update the state and cause an infinite loop
+    },[messages, user2._id])
+
+    useEffect(() => {
+        socket.on('Welcome', data => console.log(data));
+
+        //when we receive message from socket server 
+        //*(can all event listeners be in one use effect?)  <== YES!
+        socket.on("message", (msg) =>
+            setMessages(prevMessages => {
+                return [...prevMessages, msg]
+            })
+        );
+
+        return () => socket.disconnect(true);
+    }, [socket]);
 
     // change unread flag for all messages to loggedUser1
     useEffect(()=> {
@@ -53,32 +81,6 @@ const ChatRoom = () => {
         // being used in this useEffect will create
         // an infinite loop just like I saw (messages)
     },[])
-
-    //requests the Chat document between these 2 users from db and stores them in messages
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + user2._id) 
-        .then((res)=>{
-            setMessages(res.data[0]["conversation"])
-        })
-        .catch((err)=>console.log(err))
-    // },[messages])    <== if we set the messages, it will update the state and cause an infinite loop
-    },[id, loggedUser1])
-
-    const [socket] = useState(()=>io(':8000'))
-
-    useEffect(() => {
-        socket.on('Welcome', data => console.log(data));
-
-        //when we receive message from socket server 
-        //*(can all event listeners be in one use effect?)  <== YES!
-        socket.on("message", (msg) =>
-            setMessages(prevMessages => {
-                return [...prevMessages, msg]
-            })
-        );
-
-        return () => socket.disconnect(true);
-    }, []);
 
     // function to update all messages to loggedInUser
     // to be unread:false
@@ -107,7 +109,6 @@ const ChatRoom = () => {
     //when we send message to socket server
     const submitHandler = (e) => {
         e.preventDefault();
-        debugger;
         socket.emit('clientEvent', {
             from:loggedUser1._id, 
             to:id, 
@@ -123,7 +124,7 @@ const ChatRoom = () => {
 
 
     return(
-    <>        
+    <div>      
         <Row nogutter="true" className="m-0 p-0 bg-light mx-0">
             <Col className="text-center d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
                 { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
@@ -133,8 +134,8 @@ const ChatRoom = () => {
                     </form>
             </Col>
         </Row>
-        <Row className="d-flex justify-content-center bg-light">
-            <Col className="text-center col-12 col-sm-3 h-25 justify-content-center">
+        <Row className="d-flex my-height justify-content-center bg-light">
+            <Col className="text-center overflow-auto col-12 col-sm-3 h-100 justify-content-center">
                 { messages ? messages.map((message,idx)=>(
                     // {message.from == user2._id ? "margin-left:30px" : null}
                     <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
@@ -143,7 +144,7 @@ const ChatRoom = () => {
             </Col>
         </Row>
 
-    </>
+    </div>
     )
 }
 

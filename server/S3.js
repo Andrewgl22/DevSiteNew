@@ -18,14 +18,14 @@ function uploadFile(file) {
   console.log("In upload file")
   const fileStream = fs.createReadStream(file.path)
 
-  console.log(file)
+  // console.log(file)
   const uploadParams = {
     Bucket: bucketName,
     Body: fileStream,
     Key: file.filename   //file.name
   }
 
-  console.log('went through S3 function')
+  // console.log('went through S3 function')
 
   return s3.upload(uploadParams).promise()
 }

@@ -41,7 +41,6 @@ module.exports = (app) => {
 
     //sends form photo through multer and uploads to S3
     app.post('/api/upload', upload.single("photo"), Dev.uploadPhoto)
-    //upload.single('photo'), this is middleware that I'm pretty sure I don't need
 
     //grabs specific photo from S3 by id
     app.get('/images/:key', Dev.getPhoto)

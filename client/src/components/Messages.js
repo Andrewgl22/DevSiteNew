@@ -46,7 +46,7 @@ const Messages = () => {
                     <tbody>
                     { !chats.length ? <tr><td>You have 0 messages</td></tr> : 
                         chats.map((chat,idx)=>(
-                        <tr>
+                        <tr key={idx}>
                             {/* {let chatid = chat.user_ids.filter(user => user.id !== loggedUser1.id)} */}
                             <td><Link to={`/chatroom/${returnId(chat)}`} style={{color:'lightgrey'}}><span style={{color:'black'}}>{chat.names[0] === loggedUser1.name ? chat.names[1] : chat.names[0]}</span><br></br>{chat.conversation[chat.conversation.length-1].message}</Link></td>
                         </tr>

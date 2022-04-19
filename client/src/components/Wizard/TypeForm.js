@@ -14,13 +14,13 @@ const TypeForm = ({setType, setIconComp,progressValue, setProgressValue}) => {
 
     return(
         <div className="form-box">
-            <p>Are you a...</p>
+            <h4>Are you a...</h4>
 
             <input type="checkbox" id="employer" name="employer" onClick={empHandler}/>
-            <label for="employer">Employer</label>
+            <label for="employer"><h5 className="ml-2">Employer</h5></label>
         
-            <input type="checkbox" id="dev" name="dev" onClick={devHandler} />
-            <label for="dev">Developer</label>
+            <input type="checkbox" id="dev" name="dev" className="ml-3" onClick={devHandler} />
+            <label for="dev"><h5 className="ml-2">Developer</h5></label>
             
         </div>
     )

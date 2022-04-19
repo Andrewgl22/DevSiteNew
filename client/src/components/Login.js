@@ -40,13 +40,13 @@ const Login = () => {
     }
 
     return(
-        <Container className="jumbotron h-100 login" fluid>
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col className="col-6">
+        <Container className="jumbotron" fluid>
+            <Row className="d-flex justify-content-center h-100 align-items-center">
+                <Col className="col-8 col-sm-4 vh-100">
                 <h1>Login</h1>
                 <Link to="/register">Register Here</Link>
                 
-                    <Form className="w-50 mx-auto" type="">
+                    <Form className="mx-auto" type="">
                         <p className="text-danger">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>

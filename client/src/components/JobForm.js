@@ -29,7 +29,7 @@ const JobForm = () => {
     const [description, setDescription] = useState("")
     const [company, setCompany] = useState("")
     const [location, setLocation] = useState("")
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState()
 
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
@@ -40,7 +40,7 @@ const JobForm = () => {
 
     const submitHandler = async (e) => {
         try {
-            // e.preventDefault()
+            e.preventDefault()
             const result = await axios.post("http://localhost:8000/api/createJob", {
                 createdBy:{
                     id:loggedUser1._id,
@@ -54,45 +54,47 @@ const JobForm = () => {
                 })
                 history.push('/dashboard')
         } catch(err) {
+            debugger;
             const errorResponse = err.response.data.errors;
             console.log(errorResponse)
-            const errorArr = []; 
-            for (const key of Object.keys(errorResponse)) { 
-                errorArr.push(errorResponse[key].message)
-            }
-            setErrors(errorArr);
+            // const errorArr = []; 
+            // for (const key of Object.keys(errorResponse)) { 
+            //     errorArr.push(errorResponse[key].message)
+            // }
+            setErrors(errorResponse);
+            // console.log("this is position error: " + errors.position.message)
             // setErrors(err.response.data.errors)
 
         }
     }
 
     return(     
-            <Row className="mx-auto w-75 p-4 ">
-                <Col className="col-10 col-sm-4 offset-2">
+            <Row className="mx-auto p-4 ">
+                <Col className="col-11 col-sm-4">
                 <h3>Add A Job</h3>
                     <Form>
-                    {errors.map((err, index) => <p key={index} class="text-danger">{err}</p>)}
+                    {/* {errors.map((err, index) =><b><p key={index} class="text-danger">{err}</p></b>)} */}
                         <Form.Group>
-                            <Form.Label>Position</Form.Label>
+                            <Form.Label>Position{errors && errors.position ? <p className="text-danger">{errors.position.message}</p> : null }</Form.Label>
                             <Form.Control type="text" placeholder="Position" onChange={(e)=> setPosition(e.target.value)}></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Description</Form.Label>
+                            <Form.Label>Description{errors && errors.description ? <p className="text-danger">{errors.description.message}</p> : null }</Form.Label>
                             <Form.Control type="textarea" placeholder="Description" onChange={(e)=> setDescription(e.target.value)}></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Company</Form.Label>
+                            <Form.Label>Company {errors && errors.company ? <p className="text-danger">{errors.company.message}</p> : null }</Form.Label>
                             <Form.Control type="text" placeholder="Company" onChange={(e)=> setCompany(e.target.value)}></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Location</Form.Label>
+                            <Form.Label>Location {errors && errors.location ? <p className="text-danger">{errors.location.message}</p> : null }</Form.Label>
                             <Form.Control type="text" placeholder="Location" onChange={(e)=> setLocation(e.target.value)}></Form.Control>
                         </Form.Group>
                         <Form.Control type="hidden" name="userId" value={loggedUser1._id} />
                     </Form>
                 </Col>
                 <Col className="text-center">
-                <div className="form-box col-12 col-sm-10">
+                <div className="form-box col-11 col-sm-10">
                     <h2>Technologies</h2>
                     <div className="iconBox col-12">
                         <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')}  />

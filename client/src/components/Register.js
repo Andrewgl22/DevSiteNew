@@ -66,10 +66,12 @@ const Register = () => {
     }
 
     return(
-        <div className="App">
-            
-            <Link to="/login">Already a member? Log in here.</Link>
-            <Form className="jumbotron m-5 w-50 mx-auto">
+        <div className="App vh-100">
+            <div className="d-flex justify-content-around align-items-center">
+            <h3>Register for DevHyre</h3>    
+            <Link to="/login" className="">Already a member? Log in here.</Link>
+            </div>
+            <Form className="m-5 mx-auto h-100 col-10 col-sm-6">
                 <Form.Group controlId="formBasicName" >
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your name" onChange={(e)=> setName(e.target.value)}/>
@@ -114,7 +116,7 @@ const Register = () => {
                     <Form.Control type="password" onChange={(e)=> setConfirmPassword(e.target.value)}></Form.Control>
                 </Form.Group>
                 </Row>
-                <Button onClick={submitHandler}>Submit</Button>
+                <Button className="mb-5" onClick={submitHandler}>Submit</Button>
             </Form>
         </div>
 

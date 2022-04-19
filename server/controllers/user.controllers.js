@@ -165,7 +165,7 @@ module.exports.getapi = async (req,res) => {
 
 module.exports.uploadPhoto = async (req,res) => {
     try {
-        console.log(req.file)
+        // console.log(req.file)
         const file = req.file
         const result = await uploadFile(file)
         // console.log(result)
@@ -179,7 +179,7 @@ module.exports.uploadPhoto = async (req,res) => {
 module.exports.getPhoto = async (req,res) => {
     try {
         const key = req.params.key
-        console.log(key)
+        // console.log(key)
         const readStream = getFileStream(key)
         readStream.pipe(res)
     } catch(err) {

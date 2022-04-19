@@ -31,19 +31,20 @@ const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgress
                 website
         })
         
-        console.log(result)
+            console.log(result)
 
-        //add imageKey into loggedUser browser object
-        var existing = localStorage.getItem('loggedUser');
-        existing = existing ? JSON.parse(existing) : {};
-        existing['imageKey'] = imageKey;
-        existing['type'] = type;
-        localStorage.setItem('loggedUser', JSON.stringify(existing));
-
-        function next(){
+            //add imageKey into loggedUser browser object
+            var existing = localStorage.getItem('loggedUser');
+            existing = existing ? JSON.parse(existing) : {};
+            existing['imageKey'] = imageKey;
+            existing['type'] = type;
+            existing['skills'] = skillsArr;
+            localStorage.setItem('loggedUser', JSON.stringify(existing));
             history.push('/dashboard')
-        }
-        setTimeout(next, 4000)
+        // function next(){
+        //     history.push('/dashboard')
+        // }
+        // setTimeout(next, 4000)
 
             } catch {
                 console.log('not working')
@@ -77,7 +78,7 @@ const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgress
                 <input type="text" onChange={(e)=>siteChange(e.target.value)}></input><br></br>
                 <label>Personal Site: </label>
                 <input type="text" onChange={(e)=>webChange(e.target.value)}></input><br></br>
-        <Button onClick={submitHandler}>Submit</Button>
+        <Button onClick={submitHandler} className="mt-2">Submit</Button>
         </div>
     )
 }

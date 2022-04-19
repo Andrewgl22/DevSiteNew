@@ -26,8 +26,9 @@ const StackForm = ({setIconComp, setStackType, progressValue, setProgressValue})
             <p>Are you a...</p>
 
             <select onChange={(e)=>setStackType(e.target.value)}>
-                <option>Back-End Developer</option>
+                <option style={{display:"none"}}></option>
                 <option>Front-End Developer</option>
+                <option>Back-End Developer</option>
                 <option>Full-Stack Developer</option>
             </select><br></br>
 

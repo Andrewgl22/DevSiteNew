@@ -9,6 +9,7 @@ import Register from './components/Register';
 import DevInfo from './views/DevInfo'
 import Messages from './components/Messages';
 import ChatRoom from './components/ChatRoom';
+import ProtectedRoute from './components/ProtectedRoute';
 import {MainLayout, LogRegLayout} from './components/layout/MainLayout';
 import './App.css';
 import {
@@ -40,7 +41,7 @@ function App() {
 
             <RouteWrapper path="/wizard" exact component={DevSignUp} layout={LogRegLayout} />
             <RouteWrapper path="/logout" exact component={Login} layout={MainLayout} />
-            <RouteWrapper path="/dashboard" exact component={Dashboard} layout={MainLayout} />
+            <ProtectedRoute path="/dashboard" exact component={Dashboard} />
             <RouteWrapper path="/addJob" component={JobForm} layout={MainLayout} />
             <RouteWrapper path="/jobpost/:id" exact component={JobPost} layout={MainLayout} />
             <RouteWrapper path="/devinfo/:id" exact component={DevInfo} layout={MainLayout} />
