@@ -66,20 +66,20 @@ const DevForm = (props) => {
         }
 
     return(
-        <Container fluid className="m-0 h-100 px-0">
-            <Row>
-                <Col className="col-sm-12 m-0 p-0">
-                <Navbar className="bg-success">
+        <>
+            {/* <Row>
+                <Col className="col-sm-12 m-0 p-0"> */}
+                {/* <Navbar className="bg-success">
                         <Navbar.Brand>Dev Site</Navbar.Brand>
                         <Nav variant="tabs" className="ml-auto">
                         <Nav.Link onclick={logoutHandler}>Logout</Nav.Link>
                         </Nav>
-                    </Navbar>
-                </Col>
-            </Row>
-            <Row className="ml-5 mt-3 justify-content-center">
-                <h2 className="inB">Complete your profile</h2>  
-                <ProgressBar progress={props.progress} className="inB"/> 
+                    </Navbar> */}
+                {/* </Col>
+            </Row> */}
+            <Row className="ml-5 pt-3 justify-content-center">
+                <h2 className="">Complete your profile</h2>  
+                <ProgressBar progress={props.progress} className="col-10 col-sm-4"/> 
             </Row>
 
             {(() => {
@@ -87,11 +87,11 @@ const DevForm = (props) => {
                 switch (iconComp) {
                     case 'typeForm':
                         return(
-                            <TypeForm type={type} setType={setType} setIconComp={setIconComp}/>
+                            <TypeForm type={type} setType={setType} setIconComp={setIconComp} />
                         )
                     case 'stackForm':
                         return(
-                            <StackForm setStackType={setStackType} setIconComp={setIconComp} />
+                            <StackForm setStackType={setStackType} setIconComp={setIconComp} progressValue ={progressValue} setProgressValue={setProgressValue} />
                         )            
                     case 'langForm':
                         return (
@@ -103,7 +103,7 @@ const DevForm = (props) => {
                         )
                     case 'uploadForm':
                         return (
-                            <UploadForm setProfilePhoto={setImageKey} setIconComp={setIconComp} />
+                            <UploadForm setProfilePhoto={setImageKey} setIconComp={setIconComp} progressValue ={progressValue} setProgressValue={setProgressValue}/>
                         )
                     // case 'bioForm':
                     //     return (
@@ -111,7 +111,7 @@ const DevForm = (props) => {
                     //     )
                     case 'siteForm':
                         return (
-                            <SiteForm stackType={stackType} imageKey={imageKey} skillsArr={skillsArr} type={type} />
+                            <SiteForm stackType={stackType} imageKey={imageKey} skillsArr={skillsArr} type={type} progressValue ={progressValue} setProgressValue={setProgressValue}/>
                         )
                     default:
                         return (
@@ -121,12 +121,12 @@ const DevForm = (props) => {
 
                 })()}
 
-            <div className="form-box">
+            <div className="form-box h-100">
                 <form onSubmit={submitForm}>
                     <div className="pic-box mb-5">
                         
                         <div>
-                            <img src={emptyprofile} alt="" className="profile-photo" />
+                            <img src={ imageKey ? "http://localhost:8000/images/" + imageKey : emptyprofile} alt="" className="profile-photo" />
                             <div className="card-titles">
                                 <h4>Andrew Lederman</h4>
                                 <h6>{stackType}</h6>
@@ -148,7 +148,7 @@ const DevForm = (props) => {
                     </div><br></br>
                 </form>   
             </div>
-        </Container>   
+        </>   
     )
 }
 

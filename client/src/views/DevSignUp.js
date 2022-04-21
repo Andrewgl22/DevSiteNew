@@ -7,7 +7,7 @@ import DevForm from '../components/DevForm';
 const DevSignUp = (props) => {
 
     return(
-        <div className='App'>
+        <div className='App h-100'>
             <DevForm />
         </div>
 

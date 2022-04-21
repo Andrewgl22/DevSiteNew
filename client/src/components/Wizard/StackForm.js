@@ -6,7 +6,7 @@ import {
     Button
 } from 'react-bootstrap';
 
-const StackForm = ({setIconComp, setStackType}) => {
+const StackForm = ({setIconComp, setStackType, progressValue, setProgressValue}) => {
 
     // const empHandler = () => {
     //     setIconComp('langForm')
@@ -17,6 +17,7 @@ const StackForm = ({setIconComp, setStackType}) => {
     // }
 
     const submitHandler = (e) => {
+        setProgressValue(progressValue + 10)
         setIconComp('langForm')
     }
 
@@ -25,8 +26,9 @@ const StackForm = ({setIconComp, setStackType}) => {
             <p>Are you a...</p>
 
             <select onChange={(e)=>setStackType(e.target.value)}>
-                <option>Back-End Developer</option>
+                <option style={{display:"none"}}></option>
                 <option>Front-End Developer</option>
+                <option>Back-End Developer</option>
                 <option>Full-Stack Developer</option>
             </select><br></br>
 

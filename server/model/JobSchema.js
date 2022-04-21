@@ -1,4 +1,4 @@
-const mongoose = require("mongoos")
+const mongoose = require("mongoose")
 
 const jobSchema = new mongoose.Schema({
     //need to store id and name of creator
@@ -11,22 +11,29 @@ const jobSchema = new mongoose.Schema({
         }
     },
     company:{
-        type:String
+        type:String,
+        required:[true, "Company is required"]
     },
     icon: {
         //this will be the photo key for the icon on AWS
         type:String
     },
     position:{
-        type:String
+        type:String,
+        required:[true, "Position is required"]
     },
     description:{
-        type:String
+        type:String,
+        required:[true, "Description is required"]
     },
     location:{
-        type:String
+        type:String,
+        required:[true, "Location is required"]
     },
     skills:{
         type:[String]
     }
-}, {timestampes:true})
+}, {timestamps:true})
+
+const Job = mongoose.model("Job", jobSchema)
+module.exports= Job;

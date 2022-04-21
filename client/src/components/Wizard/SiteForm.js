@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Button} from 'react-bootstrap';
 import {IconContext} from '../IconProvider';
 
-const BioForm = ({type, stackType, imageKey, skillsArr}) => {
+const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgressValue}) => {
 
     const history = useHistory();
 
@@ -31,33 +31,54 @@ const BioForm = ({type, stackType, imageKey, skillsArr}) => {
                 website
         })
         
-        console.log(result)
+            console.log(result)
 
-        //add imageKey into loggedUser browser object
-        var existing = localStorage.getItem('loggedUser');
-        existing = existing ? JSON.parse(existing) : {};
-        existing['imageKey'] = imageKey;
-        existing['type'] = type;
-        localStorage.setItem('loggedUser', JSON.stringify(existing));
-
-        function next(){
+            //add imageKey into loggedUser browser object
+            var existing = localStorage.getItem('loggedUser');
+            existing = existing ? JSON.parse(existing) : {};
+            existing['imageKey'] = imageKey;
+            existing['type'] = type;
+            existing['skills'] = skillsArr;
+            localStorage.setItem('loggedUser', JSON.stringify(existing));
             history.push('/dashboard')
-        }
-        setTimeout(next, 4000)
+        // function next(){
+        //     history.push('/dashboard')
+        // }
+        // setTimeout(next, 4000)
 
             } catch {
                 console.log('not working')
             }
     }
 
+    const siteChange = (val) => {
+        if(github !== ""){
+            return
+        }
+        else{
+            setGithub(val);
+            setProgressValue(progressValue + 10);
+        }
+    }
+
+    const webChange = (val) => {
+        if(website !== ""){
+            return
+        }
+        else{
+            setWebsite(val);
+            setProgressValue(progressValue + 10);
+        }
+    }
+
     return(
         <div className="form-box">
         <h3>Add links to your work</h3>
                 <label>Github: </label>
-                <input type="text" onChange={(e)=>setGithub(e.target.value)}></input><br></br>
+                <input type="text" onChange={(e)=>siteChange(e.target.value)}></input><br></br>
                 <label>Personal Site: </label>
-                <input type="text" onChange={(e)=>setWebsite(e.target.value)}></input><br></br>
-        <Button onClick={submitHandler}>Submit</Button>
+                <input type="text" onChange={(e)=>webChange(e.target.value)}></input><br></br>
+        <Button onClick={submitHandler} className="mt-2">Submit</Button>
         </div>
     )
 }

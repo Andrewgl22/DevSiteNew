@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {Button} from 'react-bootstrap';
 
-const UploadForm = ({setProfilePhoto, setIconComp}) => {
+const UploadForm = ({setProfilePhoto, setIconComp,progressValue, setProgressValue}) => {
 
     let reader = new FileReader();
 
@@ -40,6 +40,7 @@ const UploadForm = ({setProfilePhoto, setIconComp}) => {
             const result = await axios.post(url, formData, {headers:{"Content-Type": "multipart/form-data"}})
             console.log("The key is" + result.data.imageKey)
             setProfilePhoto(result.data.imageKey)
+            setProgressValue(progressValue + 30)
             setIconComp("siteForm")
             return result.data
         } catch {

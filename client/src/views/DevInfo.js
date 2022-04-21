@@ -9,7 +9,6 @@ import {
     OverlayTrigger, 
     Tooltip
 } from 'react-bootstrap';
-import Header from '../components/Header'
 import {IconContext} from '../components/IconProvider'
 
 
@@ -37,15 +36,14 @@ const DevInfo = () => {
     },[])
 
     return(
-        <Container fluid>
-            <Header />
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col className="col-4">  
+            <Row className="d-flex justify-content-center align-items-center mt-4">
+                <Col className="col-10 col-sm-4 p-4 text-center"> 
+                
                 {dev.imageKey ?
                 <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo2" /> :null}
                 
-                    <h3>{dev.name}</h3>
-                    <div>
+                    <h3 className="text-align">{dev.name}</h3>
+                    <div className="col-10 offset-1 text-center">
 
                     {dev.skills ? dev.skills.map((skill,idx)=>(
                             <>
@@ -68,11 +66,9 @@ const DevInfo = () => {
                     <p><b>Website:</b> {dev.website}</p>
                     <p><b>Github:</b>{dev.github}</p>
 
-                    {loggedUser1._id != dev._id ? <Link to={"/chatroom/" + dev._id}><Button>Message {dev.name}</Button></Link> : null}
-                
+                    {loggedUser1._id != dev._id ? <Link to={"/chatroom/" + dev._id}><Button>Message {dev.name}</Button></Link> : null} 
                 </Col>
             </Row>
-        </Container>
     )
 }
 

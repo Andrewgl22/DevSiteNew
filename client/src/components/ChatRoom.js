@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {useParams, Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { io } from 'socket.io-client';
 import dateformat from 'dateformat';
 import Header from './Header';
@@ -8,14 +8,20 @@ import {
     Container,
     Row,
     Col,
-    Button,
 } from 'react-bootstrap';
+import {IconContext} from './IconProvider';
 
-const socket = io('http://localhost:8000')
+// const socket = io('http://localhost:8000')
 
 const ChatRoom = () => {
     //this is the receiving user id coming from the url when you click on the message in the inbox
     const {id} = useParams();
+
+    const [id2,setId2] = useState(id)
+
+    const {msgUpdate} = useContext(IconContext);
+
+    const [msgToggle, setMsgToggle] = msgUpdate;
 
     const [user2,setUser2] = useState({})
 
@@ -23,76 +29,122 @@ const ChatRoom = () => {
 
     const [newMsg, setNewMsg] = useState("");
 
+    const [socket] = useState(()=>io(':8000'))
+
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
 
-        //grabs the 2nd user document using id from URL and stores in state
-        useEffect(()=>{
-            axios.get('http://localhost:8000/api/dev/' + id)
-            .then((res)=>{
-                setUser2(res.data)
-            })
-            .catch((err)=>console.log(err))
-        },[])
+    //grabs the 2nd user document using id from URL and stores in state
+    useEffect(()=>{
+        axios.get('http://localhost:8000/api/dev/' + id)
+        .then((res)=>{
+            setUser2(res.data)
+        })
+        .catch((err)=>console.log(err))
+    },[id])
 
     //requests the Chat document between these 2 users from db and stores them in messages
     useEffect(()=>{
-        axios.get(`http://localhost:8000/api/messages/` + loggedUser1._id + '/' + id) 
-        .then((res)=>{
-            setMessages(res.data[0]["conversation"])
+        axios.get(`http://localhost:8000/api/chats/messages/` + loggedUser1._id + '/' + user2._id) 
+        .then((req)=>{
+            // console.log(req.data)
+            setMessages(req.data[0].conversation)
         })
         .catch((err)=>console.log(err))
-    },[messages])
-
-    const [socket] = useState(()=>io(':8000'))
+    // },[messages])    <== if we set the messages, it will update the state and cause an infinite loop
+    },[messages, user2._id])
 
     useEffect(() => {
         socket.on('Welcome', data => console.log(data));
 
-        return () => socket.disconnect(true);
-    }, []);
-
-    //when we receive message from socket server 
-    //*(can all event listeners be in one use effect?)
-    useEffect(()=>{
+        //when we receive message from socket server 
+        //*(can all event listeners be in one use effect?)  <== YES!
         socket.on("message", (msg) =>
             setMessages(prevMessages => {
                 return [...prevMessages, msg]
             })
-    )},[])
+        );
+
+        return () => socket.disconnect(true);
+    }, [socket]);
+
+    // change unread flag for all messages to loggedUser1
+    useEffect(()=> {
+        axios.get(`http://localhost:8000/api/chats/update/` + loggedUser1._id + '/' + user2._id)
+        .then((res)=>{
+            setMsgToggle(!msgToggle)
+            console.log("messages updated and flag is now: " + msgToggle)
+        }).catch((err)=>{
+            console.log(err)
+        })
+        // passing in state as dependency that is
+        // being used in this useEffect will create
+        // an infinite loop just like I saw (messages)
+    },[])
+
+    // function to update all messages to loggedInUser
+    // to be unread:false
+    // useEffect(()=>{
+        
+    /* 
+        for(let i=0;i<messages.length;i++){
+            if(messages[i].to == loggedInUser._id && unread == true){
+                messages[i].unread = false
+            }
+        }
+        axios.put()
+
     
+    
+    
+    db.chats.aggregate([{$match:{user_ids:$all:{}}},{},{},{}])
+    
+    
+    */
+
+    
+
+    // })
+
     //when we send message to socket server
     const submitHandler = (e) => {
         e.preventDefault();
-        socket.emit('clientEvent', {from:loggedUser1._id, to:id, key:loggedUser1.imageKey, name1:loggedUser1.name, name2:user2.name, msg:newMsg, unread:true, time:dateformat(new Date(), "dddd, h:MM TT" )})
+        socket.emit('clientEvent', {
+            from:loggedUser1._id, 
+            to:id, 
+            key:loggedUser1.imageKey, 
+            name1:loggedUser1.name, 
+            name2:user2.name, 
+            msg:newMsg, 
+            unread:true, 
+            time:dateformat(new Date(), "dddd, h:MM TT" )
+        })
         e.target.reset();    
     }
 
 
     return(
-        <Container fluid className="App m-0 p-0 bg-light mx-0">
-            <Header />
-            <Row nogutter className="h-100">
-            <Col className="">
-            { user2.name ? <h1>Send a message to {user2.name}</h1>: null}
-                <form onSubmit={submitHandler}>
-                <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
-                <input type='submit' className="mt-3"/>
-                </form>
-            <Row className="align-items-center justify-content-center h-25">
-                
-                <Col className="col-6 col-md-6 col-xs-12 offset-3 chatbox overflow-auto">
-                    { messages ? messages.map((message,idx)=>(
-                        // {message.from == user2._id ? "margin-left:30px" : null}
-                        <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
-                        '0px'}} className='message justify-content-start align-items-left p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{loggedUser1.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
-                    )) : null}
-                </Col>
-            </Row>
-        </Col>
-            </Row>
-        </Container>
+    <div>      
+        <Row nogutter="true" className="m-0 p-0 bg-light mx-0">
+            <Col className="text-center d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
+                { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
+                    <form onSubmit={submitHandler} className="mb-3">
+                        <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
+                        <input type='submit' className="mt-3"/>
+                    </form>
+            </Col>
+        </Row>
+        <Row className="d-flex my-height justify-content-center bg-light">
+            <Col className="text-center overflow-auto col-12 col-sm-3 h-100 justify-content-center">
+                { messages ? messages.map((message,idx)=>(
+                    // {message.from == user2._id ? "margin-left:30px" : null}
+                    <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
+                    '0px'}} className='message p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from === loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
+                )) : null}
+            </Col>
+        </Row>
 
+    </div>
     )
 }
 

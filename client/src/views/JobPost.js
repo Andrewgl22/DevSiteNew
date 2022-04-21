@@ -10,11 +10,10 @@ import {
     OverlayTrigger,
     Tooltip
 } from 'react-bootstrap';
-import Header from '../components/Header'
 
 const JobPost = (props) => {
     const [job, setJob] = useState({})
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
     const history = useHistory()
 
@@ -22,6 +21,9 @@ const JobPost = (props) => {
 
     const {icons} = useContext(IconContext);
     const [enumObj] = icons;
+
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/getOneJob/${id}`)
@@ -46,14 +48,13 @@ const JobPost = (props) => {
     // }
 
     return(
-        <Container fluid className="m-0 p-0 bg-light pb-5">
-            <Row>
+        <Container fluid className="m-0 pt-3 h-100 border p-0 bg-light pb-5">
+            {/* <Row>
                 <Col className="col-md-12"></Col>
-                <Header />
                 {console.log(id)}
-            </Row>
+            </Row> */}
             <Row className="d-flex justify-content-center align-items-center">
-                <Col className="col-4">
+                <Col className="col-12 col-md-8 col-lg-4">
                     <Col className="col">
                         <h1>{job.position}</h1>
                         <p>{job.company}</p>
@@ -76,7 +77,7 @@ const JobPost = (props) => {
                             )) : null}
                         </div> 
                         <p>{job.description}</p>
-                        { job.createdBy ? <Link to={"/chatroom/" + job.createdBy.id}><Button className="app" style={{marginTop:"20px"}}>Apply for this position</Button></Link> : null}
+                        { job.createdBy && loggedUser1.type !== "employer" ? <Link to={"/chatroom/" + job.createdBy.id}><Button className="app" style={{marginTop:"20px"}}>Apply for this position</Button></Link> : null}
                     </Col>
                 </Col>
             </Row>

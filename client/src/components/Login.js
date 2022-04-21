@@ -16,7 +16,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState([]);
 
     const {user} = useContext(IconContext);
 
@@ -28,23 +28,26 @@ const Login = () => {
             password
         },{withCredentials:true})
         let logged = await axios.get("http://localhost:8000/api/loggedUser", {withCredentials: true})
-        console.log(`Email is: ${logged.data}`);
+        console.log(`Email is: ${logged.data.email}`);
         localStorage.setItem('loggedUser', JSON.stringify(logged.data))
         console.log(`Logged in user is: ${logged.data.name}`)
         history.push('/dashboard')
-    } catch {
+    } catch(err) {
+        const errorResponse = err.response.data.message;
+        setErrors(errorResponse);
         console.log('error')
     }
     }
 
     return(
-        <Container className="jumbotron h-100" fluid>
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col className="col-6">
+        <Container className="jumbotron" fluid>
+            <Row className="d-flex justify-content-center h-100 align-items-center">
+                <Col className="col-8 col-sm-4 vh-100">
                 <h1>Login</h1>
                 <Link to="/register">Register Here</Link>
                 
-                    <Form className="w-50 mx-auto">
+                    <Form className="mx-auto" type="">
+                        <p className="text-danger">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />

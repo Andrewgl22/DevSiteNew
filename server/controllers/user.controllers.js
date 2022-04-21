@@ -1,10 +1,11 @@
-const {Dev, Chat, Job} = require('../model/model');
+const Dev = require('../model/DevSchema');
+const Job = require('../model/JobSchema');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { uploadFile, getFileStream } = require('../S3')
 const fs = require('fs');
 const axios = require('axios');
-require('dotenv').config();
+// require('dotenv').config();   Once this is loaded in server.js we won't need to run this again  :)
 
 module.exports.getAll = (req,res) => {
     Dev.find()
@@ -12,39 +13,10 @@ module.exports.getAll = (req,res) => {
     .catch((err)=>console.log(err))
 }
 
-module.exports.getInbox = (req,res) => {
-    Chat.find({})
-    .then((req)=>res.json(req))
-    .catch((err)=>console.log(err))
-}
-
-module.exports.getFullMessage = (req,res) => {
-    Chat.find({user_ids:{$all: [req.params.id,req.params.id2]}})
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
-}
-
-//this is for only if the chats are to be referenced, separate documents instead of embedded
-module.exports.createChat = (req,res) => {
-    Chat.create(req.body)
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
-}
-
-module.exports.deleteChat = (req,res) => {
-    Chat.deleteOne({_id:req.params.id})
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
-}
-
 module.exports.getOne = (req,res) => {
     Dev.findById({_id:req.params.id})
     .then((req)=>res.json(req))
     .catch((err)=>console.log(err))
-}
-
-module.exports.count = (req,res) => {
-    Chat.findById({_id:req.params.id})
 }
 
 module.exports.update = (req,res) => {
@@ -61,21 +33,38 @@ module.exports.deleteOne = (req,res) => {
 }
 
 module.exports.register = (req,res) => {
-    Dev.create(req.body)
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
+    let user = new Dev(req.body);
+    console.log(user);
+    user.save()
+        .then((newUser) => {
+            console.log(newUser)
+            res.json(newUser);
+        })
+        .catch((err) => {
+            console.log(err)
+            // we need to remember to send back the error object as a response  :P
+            res.json(err);
+        })
 }
 
 module.exports.deleteDev = (req,res) => {
     Dev.deleteOne({_id:req.params.id})
     .then((req) => res.json(req))
-    .catch((err) => console.log(err))
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    })
 }
 
 module.exports.createJob = (req,res) => {
-    Job.create(req.body)
-    .then((req)=>res.json(req))
-    .catch((err) => console.log(err))
+    let job = new Job(req.body)
+    job.save()
+        .then((req)=>res.json(req))
+        .catch((err) => {
+            console.log("Error in create job")
+            console.log(err);
+            res.status(400).json(err);
+        })
 }
 
 // use matchJobPercentage function here
@@ -108,36 +97,42 @@ module.exports.deleteJob = (req,res) => {
     .catch((err) => console.log(err))
 }
 
-module.exports.login = (req,res) => {
-    // console.log(req.body.email)
+module.exports.login = async (req,res) => {
+    console.log(req.body)
+    // let reqPass = await bcrypt.hash(req.body.password, 10);
+
     Dev.findOne({email: req.body.email})
-    .then(user=>{
-        if (user === null){
-        res.status(400).json({message:'Invalid login attempt'})
-        } else {
-            bcrypt.compare(req.body.password, user.password)
-            .then(passwordIsValid => {
-                if (passwordIsValid) {
-                    res. 
-                    cookie(
-                        'usertoken',
-                        jwt.sign({_id: user._id}, process.env.JWT_SECRET),
-                        {
-                        httpOnly: true
-                        }
-                    )
-                    .json({msg: "success!"});
-                    } else {
-                    res.status(400).json({msg: "Invalid login attempt"})
-                    }
-                })
-                .catch( err => 
-                    res.status(400).json({msg : "Invalid login attempt"})
-                );
+        .then(user=>{
+            if (user === null){
+                res.status(400).json({message:'Invalid login attempt'})
+            } else {
+                // console.log(`req pw:  ${reqPass}`);
+                // console.log(`user pw: ${user.password}`);
+                bcrypt.compare(req.body.password, user.password)
+                    .then(passwordIsValid => {
+                        if (passwordIsValid) {
+                            res. 
+                            cookie(
+                                'usertoken',
+                                jwt.sign({_id: user._id}, process.env.JWT_SECRET),
+                                {
+                                httpOnly: true
+                                }
+                            )
+                            .json({msg: "success!"});
+                            } else {
+                            res.status(400).json({msg: "Invalid login attempt"})
+                            }
+                        })
+                    .catch( err => {
+                        console.log('error from bcrypt compare:');
+                        console.log(err);
+                        res.status(400).json({msg : "Invalid login attempt"})
+                    });
             }
             })
-            .catch(err => res.json(err));
-        }
+        .catch(err => res.json(err));
+    }
 
 module.exports.logOut = (req, res) => {
     console.log("In logout controller")
@@ -158,10 +153,10 @@ module.exports.getLoggedUser = (req,res) => {
 
 module.exports.getapi = async (req,res) => {
     try {
-    const key = process.env.DATA_API_KEY
-    console.log(key)
-    const result = await axios.get(`https://newsapi.org/v2/everything?q=programming&apiKey=${key}`)
-    return res.json(result.data)
+        const key = process.env.DATA_API_KEY;
+        // console.log(key);
+        const result = await axios.get(`https://newsapi.org/v2/everything?q=programming&apiKey=${key}`);
+        return res.json(result.data);
     } catch {
         console.log('Something went wrong')
     }
@@ -170,10 +165,10 @@ module.exports.getapi = async (req,res) => {
 
 module.exports.uploadPhoto = async (req,res) => {
     try {
-        console.log(req.file)
+        // console.log(req.file)
         const file = req.file
         const result = await uploadFile(file)
-        console.log(result)
+        // console.log(result)
         res.json({imageKey: result.key})
     } catch(err) {
         console.error(err)
@@ -184,7 +179,7 @@ module.exports.uploadPhoto = async (req,res) => {
 module.exports.getPhoto = async (req,res) => {
     try {
         const key = req.params.key
-        console.log(key)
+        // console.log(key)
         const readStream = getFileStream(key)
         readStream.pipe(res)
     } catch(err) {

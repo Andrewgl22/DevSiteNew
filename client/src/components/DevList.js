@@ -29,22 +29,25 @@ const DevList = (props) => {
     },[]);
     
     return(           
-                <Col className="align-items-center mr-0">
+                <Col className="align-items-center order-sm-6 m-5 col-10 col-sm-4">
                 <h4>Featured Devs</h4>
                 <Carousel className="mt-3">
                     {devList.map((dev,idx)=>(
                         // <div key={idx} className="pic-box">
                         dev.type == "dev" ?
                             <Carousel.Item key={idx} className="pic-box2">
-                                <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo" />
-                                <h2>{dev.name}</h2>
-                                <h6>{dev.stackType}</h6>
+                                <div className="d-flex">
+                                    <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo" />
+                                    <div className="ml-5">
+                                        <h2 className=" d-block">{dev.name}</h2>
+                                        <h6>{dev.stackType}</h6>
+                                    </div>
+                                </div>
                                 <Row className="h-2">
                                     <Col className="">
-                                        <div className="" >
                                             <>
                                             {dev.skills.map((skill,idx)=>(
-                                               
+                                            
                                                     <>
                                                         <OverlayTrigger
                                                         key={idx}
@@ -58,14 +61,14 @@ const DevList = (props) => {
                                                         <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
                                                         </OverlayTrigger>
                                                     </>
-                                               
+                                            
                                             ))}  
                                             </> 
-                                        </div>
+                                       
 
                                     </Col>
                                 </Row>
-                                <button className=" mb-5" style={{borderRadius:"15px", marginBottom:"10px;"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className="mb-5 mt-1" style={{borderRadius:"15px", marginBottom:"10px"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
                         /* </div> */   
                         : "")) }
