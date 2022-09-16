@@ -34,16 +34,15 @@ module.exports.deleteOne = (req,res) => {
 
 module.exports.register = (req,res) => {
     let user = new Dev(req.body);
-    console.log(user);
+    // console.log(user);
     user.save()
         .then((newUser) => {
             console.log(newUser)
             res.json(newUser);
         })
         .catch((err) => {
-            console.log(err)
-            // we need to remember to send back the error object as a response  :P
-            res.json(err);
+            console.log({error:err})
+            res.status(400).json({err:err.errors});
         })
 }
 
@@ -131,7 +130,7 @@ module.exports.login = async (req,res) => {
                     });
             }
             })
-        .catch(err => res.json(err));
+        .catch(err => res.status(400).json(err));
     }
 
 module.exports.logOut = (req, res) => {
@@ -179,9 +178,9 @@ module.exports.uploadPhoto = async (req,res) => {
 module.exports.getPhoto = async (req,res) => {
     try {
         const key = req.params.key
-        // console.log(key)
-        const readStream = getFileStream(key)
-        readStream.pipe(res)
+        console.log("image key: ",key)
+        const readStream = await getFileStream(key)
+        return readStream.pipe(res)
     } catch(err) {
         console.error(err)
         console.log("getPhoto method error")

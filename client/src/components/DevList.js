@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../App.css';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {IconContext} from './IconProvider';
-import {Carousel, Container, Col, Row, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {Carousel, Col, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 
 
 const DevList = (props) => {
 
-    const localUser = localStorage.getItem('loggedUser')
-    const loggedUser1 = JSON.parse(localUser)
+    // const localUser = localStorage.getItem('loggedUser')
+    // const loggedUser1 = JSON.parse(localUser)
 
     const [devList,setDevList] = useState([])
 
     const {icons} = useContext(IconContext);
     const [enumObj] = icons;
 
-    const history = useHistory();
+    const navigate = useNavigate()
 
 
     useEffect(()=>{
@@ -34,8 +34,8 @@ const DevList = (props) => {
                 <Carousel className="mt-3">
                     {devList.map((dev,idx)=>(
                         // <div key={idx} className="pic-box">
-                        dev.type == "dev" ?
-                            <Carousel.Item key={idx} className="pic-box2">
+                        dev.type === "dev" ?
+                            <Carousel.Item key={dev._id} className="pic-box2">
                                 <div className="d-flex">
                                     <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo" />
                                     <div className="ml-5">
@@ -68,7 +68,7 @@ const DevList = (props) => {
 
                                     </Col>
                                 </Row>
-                                <button className="mb-5 mt-1" style={{borderRadius:"15px", marginBottom:"10px"}} onClick={(e)=>history.push(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className="mb-5 mt-4" style={{borderRadius:"15px", marginBottom:"10px"}} onClick={(e)=>navigate(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
                         /* </div> */   
                         : "")) }

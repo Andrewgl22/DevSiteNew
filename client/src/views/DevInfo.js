@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import {useParams, useHistory, Link} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import {
-    Container,
     Row,
     Col,
     Button,
@@ -14,13 +13,12 @@ import {IconContext} from '../components/IconProvider'
 
 const DevInfo = () => {
 
-    const history = useHistory();
     const {id} = useParams();
 
     const [dev, setDev] = useState({})
 
     const {icons} = useContext(IconContext);
-    const [enumObj, setEnumObj] = icons;
+    const [enumObj] = icons;
 
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
@@ -33,7 +31,7 @@ const DevInfo = () => {
         .catch((err)=>{
             console.log(err)
         })
-    },[])
+    },[id])
 
     return(
             <Row className="d-flex justify-content-center align-items-center mt-4">
@@ -63,10 +61,10 @@ const DevInfo = () => {
                     </div>  
         
                     <p>{dev.bio}</p>
-                    <p><b>Website:</b> {dev.website}</p>
-                    <p><b>Github:</b>{dev.github}</p>
+                    <p><b>Website: </b><a href={`${dev.website}`} target="_blank" rel="noreferrer" >{dev.website}</a></p> 
+                    <p><b>Github: </b><a href={`${dev.github}`} target="_blank" rel="noreferrer" >{dev.github}</a></p>
 
-                    {loggedUser1._id != dev._id ? <Link to={"/chatroom/" + dev._id}><Button>Message {dev.name}</Button></Link> : null} 
+                    {loggedUser1._id !== dev._id ? <Link to={"/chatroom/" + dev._id}><Button>Message {dev.name}</Button></Link> : null} 
                 </Col>
             </Row>
     )

@@ -1,6 +1,6 @@
 import React, {useState,useEffect, useContext} from 'react';
 import axios from 'axios';
-import {Link, useParams, useHistory} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {IconContext} from '../components/IconProvider';
 import {
     Container,
@@ -14,8 +14,6 @@ import {
 const JobPost = (props) => {
     const [job, setJob] = useState({})
     // const [loading, setLoading] = useState(false)
-
-    const history = useHistory()
 
     const {id} = useParams()
 
@@ -32,7 +30,7 @@ const JobPost = (props) => {
             console.log(res.data)
         })
         .catch((err)=>console.log(err))
-    },[])
+    },[id])
 
     // useEffect(()=>{
     //     setLoading(true)

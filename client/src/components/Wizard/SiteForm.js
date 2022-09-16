@@ -1,12 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {Button} from 'react-bootstrap';
 import {IconContext} from '../IconProvider';
 
 const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgressValue}) => {
 
-    const history = useHistory();
+    const navigate = useNavigate()
 
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
@@ -40,7 +40,7 @@ const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgress
             existing['type'] = type;
             existing['skills'] = skillsArr;
             localStorage.setItem('loggedUser', JSON.stringify(existing));
-            history.push('/dashboard')
+            navigate('/dashboard')
         // function next(){
         //     history.push('/dashboard')
         // }

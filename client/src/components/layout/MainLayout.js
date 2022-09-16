@@ -1,27 +1,17 @@
 import React, {useContext} from 'react';
 import Header from '../Header';
-import {Container,Row,Col} from 'react-bootstrap';
+import {Outlet} from 'react-router-dom'
 import {IconContext} from '../IconProvider';
 
 
-const MainLayout = ({children}) => {
+export const MainLayout = () => {
     const {msgUpdate} = useContext(IconContext);
     const [msgToggle] = msgUpdate;
 
     return(
         <div className="h-100">
             <Header msgToggle={msgToggle} />
-            {children}
+            <Outlet />
         </div>
     )
 }
-
-const LogRegLayout = ({children}) => {
-    return(
-        <>
-            <main>{children}</main>
-        </>
-    )
-}
-
-export {MainLayout,LogRegLayout};

@@ -3,9 +3,8 @@ import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import { io } from 'socket.io-client';
 import dateformat from 'dateformat';
-import Header from './Header';
+// import Header from './Header';
 import {
-    Container,
     Row,
     Col,
 } from 'react-bootstrap';
@@ -17,7 +16,7 @@ const ChatRoom = () => {
     //this is the receiving user id coming from the url when you click on the message in the inbox
     const {id} = useParams();
 
-    const [id2,setId2] = useState(id)
+    // const [id2,setId2] = useState(id)
 
     const {msgUpdate} = useContext(IconContext);
 
@@ -124,8 +123,8 @@ const ChatRoom = () => {
 
 
     return(
-    <div>      
-        <Row nogutter="true" className="m-0 p-0 bg-light mx-0">
+    <>      
+        <Row className="m-0 p-0 bg-light mx-0 no-gutters">
             <Col className="text-center d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
                 { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
                     <form onSubmit={submitHandler} className="mb-3">
@@ -134,7 +133,7 @@ const ChatRoom = () => {
                     </form>
             </Col>
         </Row>
-        <Row className="d-flex my-height justify-content-center bg-light">
+        <Row className="d-flex my-height justify-content-center bg-light no-gutters">
             <Col className="text-center overflow-auto col-12 col-sm-3 h-100 justify-content-center">
                 { messages ? messages.map((message,idx)=>(
                     // {message.from == user2._id ? "margin-left:30px" : null}
@@ -144,7 +143,7 @@ const ChatRoom = () => {
             </Col>
         </Row>
 
-    </div>
+    </>
     )
 }
 

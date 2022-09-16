@@ -1,9 +1,8 @@
 import React, {useState, useContext} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {IconContext} from './IconProvider';
 import {
-    Container,
     Row,
     Col,
     Form,
@@ -12,6 +11,8 @@ import {
 
 const JobForm = () => {
 
+    const navigate = useNavigate()
+
     const [skillsArr,setSkillsArr] = useState([])
 
     const setSkill = (val) =>{
@@ -19,8 +20,6 @@ const JobForm = () => {
         if(skillsArr.includes(val)){return}
         setSkillsArr([...skillsArr,val]);   
     } 
-
-    const history = useHistory()
 
     const {icons} = useContext(IconContext)
     const [enumObj] = icons
@@ -34,8 +33,8 @@ const JobForm = () => {
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
     
-    const skills1 = icons[0]
-    const icon1 = null;
+    // const skills1 = icons[0]
+    // const icon1 = null;
 
 
     const submitHandler = async (e) => {
@@ -52,7 +51,7 @@ const JobForm = () => {
                 description,
                 location
                 })
-                history.push('/dashboard')
+                navigate('/dashboard')
         } catch(err) {
             debugger;
             const errorResponse = err.response.data.errors;

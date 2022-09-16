@@ -1,23 +1,6 @@
 const Dev = require('../controllers/user.controllers')
 const {authenticate, checkUser} = require('../config/jwtconfig')
 
-
-const multer = require('multer');
-const upload = multer({dest:'uploads/'});
-
-// const multerConfig = {
-//     storage : multer.diskStorage({
-//         destination: function(req,file,cb){
-//             cb(null, 'uploads/');
-//         },
-//     filename : function(req,file,cb){
-//         console.log(file);
-//         const ext = file.mimetype.split('/')[1]
-//         cb(null, file.fieldname + '-' + Date.now() + '.' + ext)
-//         }
-//     }),
-// }
-
 module.exports = (app) => {
 
     //CRUD commands
@@ -38,12 +21,6 @@ module.exports = (app) => {
     app.get('/api/logout', Dev.logOut);
 
     app.delete('/api/dev/delete/:id', Dev.deleteDev)
-
-    //sends form photo through multer and uploads to S3
-    app.post('/api/upload', upload.single("photo"), Dev.uploadPhoto)
-
-    //grabs specific photo from S3 by id
-    app.get('/images/:key', Dev.getPhoto)
 
     //grabs top 3 headlines from news API
     app.get('/apiKey', Dev.getapi)

@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {IconContext} from './IconProvider';
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {
     Container,
@@ -12,13 +12,13 @@ import {
 
 const Login = () => {
 
-    const history = useHistory();
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
 
     const {user} = useContext(IconContext);
+
+    const navigate = useNavigate()
 
     const LoginHandler = async (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ const Login = () => {
         console.log(`Email is: ${logged.data.email}`);
         localStorage.setItem('loggedUser', JSON.stringify(logged.data))
         console.log(`Logged in user is: ${logged.data.name}`)
-        history.push('/dashboard')
+        navigate('/dashboard')
     } catch(err) {
         const errorResponse = err.response.data.message;
         setErrors(errorResponse);

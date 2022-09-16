@@ -9,24 +9,12 @@ const path = require('path');
 // const {Chat, Convo} = require('./model/model');
 const ChatController = require('./controllers/chat.controllers');
 
-// this middleware for heroku build
-// if(process.env.NODE_ENV == 'production'){
-//     app.use(express.static('client/build'))
-
-//     app.get('*', (req,res)=>{
-//         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-//     })
-// }
-
 //photo upload to server with multer and to AWS S3 with aws-sdk
 // const multer = require('multer');
 // const upload = multer({dest: 'uploads/'})
 
-// create a connection with the MongoDB server
 require('./config/mongoose.config')
 
-// configure our server before we start it listening
-//      this will prevent odd errors later
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
@@ -36,6 +24,7 @@ app.use(cors({credentials:true, origin:"http://localhost:3000"}));
 const Routes = require('./routes/user.routes');
 Routes(app);
 require('./routes/chat.routes')(app);
+require('./routes/photo.routes')(app);
 
 // app.listen(8000, () => console.log("Listening on port 8000!"));
 const server = app.listen(8000, ()=>{

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {
     // Container,
     // Row,
@@ -11,8 +11,7 @@ import axios from 'axios';
 import {IconContext} from './IconProvider';
 
 const Header = () => {
-    const history = useHistory();
-
+    const navigate = useNavigate()
     const {msgUpdate} = useContext(IconContext);
 
     const [msgToggle] = msgUpdate;
@@ -26,7 +25,7 @@ const Header = () => {
 
     const logoutHandler = () => {
         localStorage.clear()
-        history.push('/login')
+        navigate('/login')
         // axios.get('http://localhost:8000/api/logout')
         // .then((res)=>{
         //     history.push('/login')

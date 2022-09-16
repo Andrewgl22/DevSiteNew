@@ -1,15 +1,11 @@
-* {
-  /* border: 1px dotted red; */
-}
+/* * {
+  border: 1px dotted red;
+} */
 
 .App {
   text-align: center;
   background-color:lightgray;
-  /* height:100vh; */
-}
-
-.inB {
-  
+  height:100vh;
 }
 
 /* html, body, #root, #app>div {
@@ -18,7 +14,7 @@
 
 .my-height{
   overflow-y:auto;
-  height:420px;
+  height:480px;
 }
 
 .header {

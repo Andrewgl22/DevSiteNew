@@ -1,15 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import {Link, Redirect, useHistory} from 'react-router-dom';
-import Header from './Header'
+import {Link} from 'react-router-dom';
 import {
     Container,
     Row,
-    Col,
-    Button,
     Table,
-    Thead,
-    Tbody
 } from 'react-bootstrap';
 // import { getLoggedUser } from '../../../server/controllers/user.controllers';
 

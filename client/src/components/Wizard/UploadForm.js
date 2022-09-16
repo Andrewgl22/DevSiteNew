@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {Button} from 'react-bootstrap';
 
 const UploadForm = ({setProfilePhoto, setIconComp,progressValue, setProgressValue}) => {
 
-    let reader = new FileReader();
+    // let reader = new FileReader();
 
     const [loading, setLoading] = useState(false)
 
@@ -53,7 +52,7 @@ const UploadForm = ({setProfilePhoto, setIconComp,progressValue, setProgressValu
     return(
         <div className="form-box">
             {loading ? <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+    <span className="sr-only">Loading...</span>
 </div> : null}
             <h2>Submit your profile photo</h2>
             <form onSubmit={submitHandler}>

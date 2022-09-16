@@ -1,35 +1,23 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
-import {MainLayout} from './layout/MainLayout';
+import {Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRoute({ component: Component, ...restOfProps }) {
-    // const user = localStorage.getItem("loggedUser");
-    // const isAuthenticated = user.type
-    const isAuthenticated = localStorage.getItem("loggedUser");
-    // console.log("this", isAuthenticated);
+const ProtectedRoute = (props:any) => {
 
-    return (
-    <Route
-        {...restOfProps}
-        render={(props) =>
-            isAuthenticated ? <MainLayout><Component {...props} /></MainLayout> : <Redirect to="/register" />
+    const useAuth=()=>{
+        const user=localStorage.getItem('loggedUser')
+        console.log(user)
+        if(user){
+          return true
+        } else {
+          return false
         }
-        />
-    );
+      }
+
+      const auth = useAuth()
+
+    return auth ? <Outlet /> : <Navigate to="/" />
+    
 }
 
-function RouteWrapper({
-    component: Component, 
-    layout: Layout, 
-    ...rest
-    }) {
-    return (
-        <Route {...rest} render={(props) =>
-            <Layout {...props}>
-                <Component {...props} />
-            </Layout>
-        } />
-    );
-    }
 
 export default ProtectedRoute;

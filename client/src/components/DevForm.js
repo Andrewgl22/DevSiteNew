@@ -1,26 +1,25 @@
 import React, { useContext, useState} from 'react';
 import axios from 'axios';
-import {Link, navigate} from '@reach/router';
-import {Redirect, useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import '../App.css'
 import ProgressBar from './ProgressBar';
 import LangForm from './Wizard/LangForm';
 import FrameForm from './Wizard/FrameForm';
 import UploadForm from './Wizard/UploadForm'
-import ResumeForm from './Wizard/ResumeForm';
+// import ResumeForm from './Wizard/ResumeForm';
 import SiteForm from './Wizard/SiteForm';
 import TypeForm from './Wizard/TypeForm';
 import StackForm from './Wizard/StackForm';
 import emptyprofile from '../static/emptyprofile.png'
 import {IconContext} from './IconProvider';
 import {
-    Container,
-    Col,
+    // Container,
+    // Col,
     Row,
-    Form,
-    Button,
-    Navbar,
-    Nav
+    // Form,
+    // Button,
+    // Navbar,
+    // Nav
 } from 'react-bootstrap';
 
 const DevForm = (props) => {
@@ -33,7 +32,7 @@ const DevForm = (props) => {
 
     const {icons, progress} = useContext(IconContext);
 
-    const [enumObj, setEnumObj] = icons;
+    const [enumObj] = icons;
     const [progressValue, setProgressValue] = progress;
     
     const [iconComp, setIconComp] = useState("typeForm");
@@ -49,7 +48,7 @@ const DevForm = (props) => {
             setSkillsArr([...skillsArr,val]);   
         } 
 
-    const history = useHistory()
+    const navigate = useNavigate()
         
         const submitForm = () => {
             navigate('/dev/new/2/')
@@ -61,7 +60,7 @@ const DevForm = (props) => {
             localStorage.clear()
             axios.get('http://localhost:8000/api/logout')
             .then((res)=>{
-                history.push('/login')
+                navigate('/login')
             }).catch((err)=>console.log(err))
         }
 

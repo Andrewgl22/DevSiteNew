@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-// pull in the schema from the other model so it can be
-//      used as a part of this model as well
 const { chatSchema } = require('./ChatSchema'); 
 
 const devSchema = new mongoose.Schema({
