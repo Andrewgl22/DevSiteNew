@@ -15,16 +15,13 @@ const devSchema = new mongoose.Schema({
         required:[true,'Email is required']
     },
     address: {
-        type:String,
-        required:[true,"Address required"]
+        type:String
     },
     city:{
-        type:String,
-        required:[true,"City is required"]
+        type:String
     },
     state:{
-        type:String,
-        required: [true,"State is required"]
+        type:String
     },
     password:{
         type:String,

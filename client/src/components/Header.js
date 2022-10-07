@@ -52,10 +52,10 @@ const Header = () => {
     },[msgToggle])
 
     return(
-                <Navbar className="bg-secondary">
+                <Navbar className="bg-secondary bg-gradient fixed-top">
                     <Navbar.Brand><b>DevHyre</b></Navbar.Brand>
                     <Nav className="ml-auto d-flex align-items-center" >
-                    <img src={"http://localhost:8000/images/" + loggedUser1.imageKey} alt="" className="avatar avatar-sm rounded-circle mr-2" style={{height:"45px",width:"45px"}}  />
+                    <img src={"http://localhost:8000/api/images/" + loggedUser1.imageKey} alt="" className="avatar avatar-sm rounded-circle mr-2" style={{height:"45px",width:"45px"}}  />
                         <Link to="/dashboard" className="text-light m-1">Dashboard</Link>
                         {/* TODO ternary if count render if not null */}
                         <Link to="/messages/2" className="text-light m-2">Messages{count !== null ? <span className="badge counter">{count}</span> : null }</Link>    

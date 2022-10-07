@@ -40,14 +40,14 @@ const Login = () => {
     }
 
     return(
-        <Container className="jumbotron" fluid>
+        <Container fluid>
             <Row className="d-flex justify-content-center h-100 align-items-center">
                 <Col className="col-8 col-sm-4 vh-100">
                 <h1>Login</h1>
                 <Link to="/register">Register Here</Link>
                 
                     <Form className="mx-auto" type="">
-                        <p className="text-danger">{errors}</p>
+                        <p className="text-danger font-weight-bold">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />

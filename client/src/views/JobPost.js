@@ -46,12 +46,12 @@ const JobPost = (props) => {
     // }
 
     return(
-        <Container fluid className="m-0 pt-3 h-100 border p-0 bg-light pb-5">
+        <>
             {/* <Row>
                 <Col className="col-md-12"></Col>
                 {console.log(id)}
             </Row> */}
-            <Row className="d-flex justify-content-center align-items-center">
+            <Row className="d-flex h-75 pb-5 justify-content-center ml-5 align-items-center">
                 <Col className="col-12 col-md-8 col-lg-4">
                     <Col className="col">
                         <h1>{job.position}</h1>
@@ -80,7 +80,7 @@ const JobPost = (props) => {
                 </Col>
             </Row>
             
-        </Container>
+        </>
 
     )
 }

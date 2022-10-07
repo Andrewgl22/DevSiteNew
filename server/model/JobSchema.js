@@ -14,10 +14,6 @@ const jobSchema = new mongoose.Schema({
         type:String,
         required:[true, "Company is required"]
     },
-    icon: {
-        //this will be the photo key for the icon on AWS
-        type:String
-    },
     position:{
         type:String,
         required:[true, "Position is required"]
@@ -31,7 +27,9 @@ const jobSchema = new mongoose.Schema({
         required:[true, "Location is required"]
     },
     skills:{
-        type:[String]
+        type:[String],
+        required:[true,"Skills are required"],
+        validate: [(value) => value.length > 0, 'You must choose at least 1 skill']
     }
 }, {timestamps:true})
 

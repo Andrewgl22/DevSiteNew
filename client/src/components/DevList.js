@@ -35,11 +35,11 @@ const DevList = (props) => {
                     {devList.map((dev,idx)=>(
                         // <div key={idx} className="pic-box">
                         dev.type === "dev" ?
-                            <Carousel.Item key={dev._id} className="pic-box2">
+                            <Carousel.Item key={dev._id} className="pic-box2 p-3">
                                 <div className="d-flex">
-                                    <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo" />
+                                    <img src={"http://localhost:8000/api/images/" + dev.imageKey} alt="" className="profile-photo" />
                                     <div className="ml-5">
-                                        <h2 className=" d-block">{dev.name}</h2>
+                                        <h2>{dev.name}</h2>
                                         <h6>{dev.stackType}</h6>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@ const DevList = (props) => {
 
                                     </Col>
                                 </Row>
-                                <button className="mb-5 mt-4" style={{borderRadius:"15px", marginBottom:"10px"}} onClick={(e)=>navigate(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className="mb-5 mt-4" style={{borderRadius:"15px"}} onClick={(e)=>navigate(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
                         /* </div> */   
                         : "")) }

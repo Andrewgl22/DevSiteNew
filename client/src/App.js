@@ -12,6 +12,7 @@ import ChatRoom from './components/ChatRoom';
 import {MainLayout} from './components/layout/MainLayout'
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
+import './index.css'
 import {
   Route,
   Routes,

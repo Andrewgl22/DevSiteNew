@@ -28,7 +28,7 @@ const ChatRoom = () => {
 
     const [newMsg, setNewMsg] = useState("");
 
-    const [socket] = useState(()=>io(':8000'))
+    const [socket] = useState(()=>io('http://localhost:8000'))
 
     const localUser = localStorage.getItem('loggedUser')
     const loggedUser1 = JSON.parse(localUser)
@@ -124,8 +124,8 @@ const ChatRoom = () => {
 
     return(
     <>      
-        <Row className="m-0 p-0 bg-light mx-0 no-gutters">
-            <Col className="text-center d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
+        <Row className="mt-5 p-0 mx-0 no-gutters">
+            <Col className="text-center mt-4 d-block col-12 col-sm-6 mx-auto d-block overflow-auto">
                 { user2.name !== null ? <h1>Send a message to {user2.name}</h1>: null}
                     <form onSubmit={submitHandler} className="mb-3">
                         <input type='textarea' onChange={(e)=>setNewMsg(e.target.value)} /><br></br>
@@ -133,12 +133,12 @@ const ChatRoom = () => {
                     </form>
             </Col>
         </Row>
-        <Row className="d-flex my-height justify-content-center bg-light no-gutters">
-            <Col className="text-center overflow-auto col-12 col-sm-3 h-100 justify-content-center">
+        <Row className="my-height justify-content-center no-gutters">
+            <Col className="text-center overflow-auto col-11 border border-dark col-sm-3 mx-auto ml-4">
                 { messages ? messages.map((message,idx)=>(
                     // {message.from == user2._id ? "margin-left:30px" : null}
-                    <p key={idx} style={message.from === user2._id ? {marginLeft:'120px'} : {marginLeft:
-                    '0px'}} className='message p-1'><img src={"http://localhost:8000/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4 ml-0" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from === loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
+                    <p key={idx} style={message.from === user2._id ? {marginLeft:'20vh'} : {marginLeft:
+                    '2vh'}} className='message p-1'><img src={"http://localhost:8000/api/images/" + message.key} alt="" className="avatar avatar-sm rounded-circle mr-4" style={{height:"35px",width:"35px"}}  /><span className=""><b>{message.from === loggedUser1._id ? loggedUser1.name : user2.name}</b><br></br><i style={{fontSize:'10px'}}>{dateformat(message.createdAt, "dddd, h:MM TT") }</i></span><br></br>{ message ? message.message : ""}</p>
                 )) : null}
             </Col>
         </Row>

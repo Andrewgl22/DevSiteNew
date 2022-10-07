@@ -30,6 +30,9 @@ const DevForm = (props) => {
     //     setProgressValue(progressValue +8.5)
     // }
 
+    const localUser = localStorage.getItem('loggedUser')
+    const loggedUser1 = JSON.parse(localUser)
+
     const {icons, progress} = useContext(IconContext);
 
     const [enumObj] = icons;
@@ -122,12 +125,12 @@ const DevForm = (props) => {
 
             <div className="form-box h-100">
                 <form onSubmit={submitForm}>
-                    <div className="pic-box mb-5">
+                    <div className="pic-box mb-5 align-items-end d-inline-block fixed">
                         
                         <div>
-                            <img src={ imageKey ? "http://localhost:8000/images/" + imageKey : emptyprofile} alt="" className="profile-photo" />
+                            <img src={ imageKey ? "http://localhost:8000/api/images/" + imageKey : emptyprofile} alt="" className="profile-photo" />
                             <div className="card-titles">
-                                <h4>Andrew Lederman</h4>
+                                <h4>{loggedUser1.name}</h4>
                                 <h6>{stackType}</h6>
                             </div>
                         </div>

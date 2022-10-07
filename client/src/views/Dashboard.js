@@ -16,7 +16,7 @@ const Dashboard = (props) => {
     const loggedUser1 = JSON.parse(localUser)
 
     return(
-        <Container fluid className="App col-12 pb-5 no-gutters">
+        <Container fluid className="App col-12 pb-5 no-gutters pt-5 mt-3">
             {/* <Header nogutter /> */}
             <Row className="d-flex justify-content-center text-center">
                     <h1>Welcome {loggedUser1.name}!</h1>
@@ -28,9 +28,9 @@ const Dashboard = (props) => {
                     
             </Row>
             <Row className="no-gutters pt-5">
-                <Col className="fixed-bottom">
-                    <div className="p-2" style={{backgroundColor:"lightblue"}}>
-                        <p>Copyright 2021 Andrew Lederman. This site is hosted at: <a href="herokuapp.com">Herokuapp.com  </a>Github: <a href="https://github.com/Andrewgl22/DevSite" target="_blank" rel="noreferrer">  Github</a></p> 
+                <Col className="no-gutters">
+                    <div className="p-2 no-gutters" style={{backgroundColor:"lightblue"}}>
+                        <p>Copyright 2022 Andrew Lederman. This site is hosted on <a href="herokuapp.com">AWS</a> Github: <a href="https://github.com/Andrewgl22/DevSiteNew" target="_blank" rel="noreferrer">  Github</a></p> 
                     </div>
                 </Col>
             </Row>

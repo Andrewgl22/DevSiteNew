@@ -57,8 +57,10 @@ module.exports.deleteDev = (req,res) => {
 
 module.exports.createJob = (req,res) => {
     let job = new Job(req.body)
+    console.log(job)
     job.save()
-        .then((req)=>res.json(req))
+        .then((result)=>
+        res.json(result))
         .catch((err) => {
             console.log("Error in create job")
             console.log(err);
@@ -97,7 +99,7 @@ module.exports.deleteJob = (req,res) => {
 }
 
 module.exports.login = async (req,res) => {
-    console.log(req.body)
+    // console.log(req.body)
     // let reqPass = await bcrypt.hash(req.body.password, 10);
 
     Dev.findOne({email: req.body.email})

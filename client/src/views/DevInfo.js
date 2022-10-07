@@ -34,11 +34,11 @@ const DevInfo = () => {
     },[id])
 
     return(
-            <Row className="d-flex justify-content-center align-items-center mt-4">
-                <Col className="col-10 col-sm-4 p-4 text-center"> 
+            <Row className="justify-content-center align-items-center mt-5">
+                <Col className="col-10 col-sm-4 mt-4 p-4 text-center"> 
                 
                 {dev.imageKey ?
-                <img src={"http://localhost:8000/images/" + dev.imageKey} alt="" className="profile-photo2" /> :null}
+                <img src={"http://localhost:8000/api/images/" + dev.imageKey} alt="" className="profile-photo2" /> :null}
                 
                     <h3 className="text-align">{dev.name}</h3>
                     <div className="col-10 offset-1 text-center">

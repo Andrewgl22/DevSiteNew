@@ -4,17 +4,17 @@
 
 .App {
   text-align: center;
-  background-color:lightgray;
   height:100vh;
 }
 
-/* html, body, #root, #app>div {
-  height: 100%
-} */
+html, body, #root, #app>div {
+  /* height:100vh; */
+  background-color:lightgrey;
+}
 
 .my-height{
   overflow-y:auto;
-  height:480px;
+  height:70vh;
 }
 
 .header {
@@ -54,7 +54,7 @@
   border:2px solid gray;
   border-radius:15px;
   /* margin:20px; */
-  width:200px;
+  width:30vh;
   background-color:beige;
   
 }
@@ -97,8 +97,8 @@
   border:2px solid black;
   background-color:beige;
   border-radius:10px;
-  height:220px;
-  padding:15px 15px;
+  height:35vh;
+  /* padding:15px 15px; */
 }
 
 .counter {

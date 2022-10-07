@@ -22,5 +22,5 @@ module.exports = (app) => {
     app.post('/api/upload', upload.single("photo"), Dev.uploadPhoto)
     
     //grabs specific photo from S3 by id
-    app.get('/images/:key', Dev.getPhoto)
+    app.get('/api/images/:key', Dev.getPhoto)
 }
