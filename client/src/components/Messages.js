@@ -34,7 +34,7 @@ const Messages = () => {
     return(
         <Container fluid className="m-5 p-0">
             <Row className="align-items-center justify-content-center">
-                <Table className="bordered table-striped col-10 col-sm-6 ">
+                <Table className="bordered table table-striped col-10 col-sm-6 mt-3 ">
                     <th>
                         <h2>Messages</h2>
                     </th>
@@ -43,7 +43,7 @@ const Messages = () => {
                         chats.map((chat,idx)=>(
                         <tr key={idx}>
                             {/* {let chatid = chat.user_ids.filter(user => user.id !== loggedUser1.id)} */}
-                            <td><Link to={`/chatroom/${returnId(chat)}`} style={{color:'white'}}><span style={{color:'black',fontWeight:"bold"}}>{chat.names[0] === loggedUser1.name ? chat.names[1] : chat.names[0]}</span><br></br>{chat.conversation[chat.conversation.length-1].message}</Link></td>
+                            <td><Link to={`/chatroom/${returnId(chat)}`} style={{color:'black'}}><span style={{color:'black',fontWeight:"bold"}}>{chat.names[0] === loggedUser1.name ? chat.names[1] : chat.names[0]}</span><br></br>{chat.conversation[chat.conversation.length-1].message}</Link></td>
                         </tr>
                     ))
                     }

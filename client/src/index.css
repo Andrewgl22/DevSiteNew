@@ -8,12 +8,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html {
   height:100vh;
+
 }
 
 #root {

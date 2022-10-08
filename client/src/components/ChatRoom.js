@@ -134,7 +134,7 @@ const ChatRoom = () => {
             </Col>
         </Row>
         <Row className="my-height justify-content-center no-gutters">
-            <Col className="text-center overflow-auto col-11 border border-dark col-sm-3 mx-auto ml-4">
+            <Col className="text-center overflow-auto col-11 col-sm-3 mx-auto ml-4">
                 { messages ? messages.map((message,idx)=>(
                     // {message.from == user2._id ? "margin-left:30px" : null}
                     <p key={idx} style={message.from === user2._id ? {marginLeft:'20vh'} : {marginLeft:
