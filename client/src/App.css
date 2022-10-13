@@ -1,6 +1,6 @@
-/* * {
+* {
   border: 1px dotted red;
-} */
+}
 
 .App {
   text-align: center;
@@ -122,16 +122,23 @@ html, body, #root, #app>div {
 
 @media (max-width:576px) {
   .icons img{
-    height:2.4em;
-    width:2.4em;
+    height:1.5em;
+    width:1.5em;
     
   }
 }
 
 @media (max-width:576px){
-  .profile-photo{
-    height:2em;
-    width:2em;
+  .prof-photo{
+    height:1.5em;
+    width:1.5em;
+  }
+}
+
+@media (max-width:576px){
+  .profile-photo img{
+    height:8em;
+    width:8em;
   }
 }
 
@@ -142,6 +149,7 @@ html, body, #root, #app>div {
   display:inline-block;
   border-radius:10px;
 }
+
 
 .chatbox {
   /* display:block; */

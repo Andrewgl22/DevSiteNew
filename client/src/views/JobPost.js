@@ -52,8 +52,8 @@ const JobPost = (props) => {
                 {console.log(id)}
             </Row> */}
             <Row className="d-flex h-75 pb-5 justify-content-center ml-5 mt-2 align-items-center">
-                <Col className="col-12 col-md-8 col-lg-4">
-                    <Col className="col">
+                <Col className="col-12 col-md-8 mt-4 col-lg-4">
+                    <Col className="col mt-4">
                         <h1>{job.position}</h1>
                         <p>{job.company}</p>
                         { job.createdBy ? <p><b>Posted by {job.createdBy.name}</b></p> : null}

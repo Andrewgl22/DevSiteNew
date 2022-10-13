@@ -37,14 +37,14 @@ const DevList = (props) => {
                         dev.type === "dev" ?
                             <Carousel.Item key={dev._id} className="pic-box2 p-3">
                                 <div className="d-flex">
-                                    <img src={"http://localhost:8000/api/images/" + dev.imageKey} alt="" className="profile-photo" />
-                                    <div className="ml-5">
-                                        <h2>{dev.name}</h2>
-                                        <h6>{dev.stackType}</h6>
+                                    <img src={"http://localhost:8000/api/images/" + dev.imageKey} alt="" className="profile-photo prof-photo" />
+                                    <div className="col-10">
+                                        <h3>{dev.name}</h3>
+                                        <h6 className="col-12">{dev.stackType}</h6>
                                     </div>
                                 </div>
-                                <Row className="mt-3 icons">
-                                    <Col className="mt-1 mb-3 icons">
+                                <Row className="mt-1 icons">
+                                    <Col className="mt-1 icons">
                                             <>
                                             {dev.skills.map((skill,idx)=>(
                                             
