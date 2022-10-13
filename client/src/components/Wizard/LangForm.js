@@ -21,7 +21,7 @@ const LangForm = ({iconComp, setIconComp, skillsArr, setSkillsArr}) => {
         <div className="form-box">
             <h2>Pick your top 5 languages</h2>
             <div className="iconBox">
-            <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')} disabled={skillsArr.includes("html")}  />
+                <img src={enumObj.html} alt="" height="40" width="40" value="html" onClick={(e)=>setSkill('html')} disabled={skillsArr.includes("html")}  />
                 <img src={enumObj.css} alt="" height="40" width="40" value="css" onClick={()=>setSkill('css')} />
                 <img src={enumObj.js} alt="" height="40" width="40" value="js" onClick={()=>setSkill('js')} />
                 <img src={enumObj.ruby} alt="" height="40" width="40" value="ruby" onClick={()=>setSkill('ruby')} />

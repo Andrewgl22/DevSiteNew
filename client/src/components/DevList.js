@@ -29,7 +29,7 @@ const DevList = (props) => {
     },[]);
     
     return(           
-                <Col className="align-items-center order-sm-6 m-5 col-10 col-sm-4">
+            <Col className="align-items-center mx-auto order-sm-6 justify-content-center col-10 col-sm-4 mb-3">
                 <h4>Featured Devs</h4>
                 <Carousel className="mt-3">
                     {devList.map((dev,idx)=>(
@@ -43,8 +43,8 @@ const DevList = (props) => {
                                         <h6>{dev.stackType}</h6>
                                     </div>
                                 </div>
-                                <Row className="h-2">
-                                    <Col className="">
+                                <Row className="mt-3 icons">
+                                    <Col className="mt-1 mb-3 icons">
                                             <>
                                             {dev.skills.map((skill,idx)=>(
                                             
@@ -58,7 +58,7 @@ const DevList = (props) => {
                                                         </Tooltip>
                                                         }
                                                     >
-                                                        <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" value={`${enumObj[skill]}`} />
+                                                        <img key={idx} src={enumObj[skill]} alt="" height="40px" width="40px" value={`${enumObj[skill]}`} />
                                                         </OverlayTrigger>
                                                     </>
                                             
@@ -68,7 +68,7 @@ const DevList = (props) => {
 
                                     </Col>
                                 </Row>
-                                <button className="mb-5 mt-4" style={{borderRadius:"15px"}} onClick={(e)=>navigate(`/devinfo/${dev._id}`)}>View Profile</button>
+                                <button className="mt-2" style={{borderRadius:"15px"}} onClick={(e)=>navigate(`/devinfo/${dev._id}`)}>View Profile</button>
                             </Carousel.Item>
                         /* </div> */   
                         : "")) }

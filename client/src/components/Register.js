@@ -57,9 +57,9 @@ const Register = () => {
 
     return(
         <div className="App vh-100 pt-4">
-            <div className="d-flex justify-content-around align-items-center">
-            <h3 className="text-3xl font-bold">Register for DevHyre</h3>    
-            <Link to="/login">Already a member? Log in here.</Link>
+            <div className="align-items-center mb-4">
+                <h3 className="">Register for DevHyre</h3>
+                <Link to="/login" className="d-block">Already a member? Log in here.</Link>
             </div>
             <Form className="mx-auto col-10 col-sm-6">
                 <Form.Group controlId="formBasicName" >

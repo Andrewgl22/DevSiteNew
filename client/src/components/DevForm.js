@@ -69,21 +69,12 @@ const DevForm = (props) => {
 
     return(
         <>
-            {/* <Row>
-                <Col className="col-sm-12 m-0 p-0"> */}
-                {/* <Navbar className="bg-success">
-                        <Navbar.Brand>Dev Site</Navbar.Brand>
-                        <Nav variant="tabs" className="ml-auto">
-                        <Nav.Link onclick={logoutHandler}>Logout</Nav.Link>
-                        </Nav>
-                    </Navbar> */}
-                {/* </Col>
-            </Row> */}
-            <Row className="ml-5 pt-3 justify-content-center">
-                <h2 className="">Complete your profile</h2>  
-                <ProgressBar progress={props.progress} className="col-10 col-sm-4"/> 
+            <Row className="pt-3 justify-content-center">
+                <h2 className="d-block">Complete your profile</h2>
             </Row>
-
+            <Row className="justify-content-center no-gutters">
+                <ProgressBar progress={props.progress} className="prog col-12"/>
+            </Row> 
             {(() => {
 
                 switch (iconComp) {
@@ -123,31 +114,25 @@ const DevForm = (props) => {
 
                 })()}
 
-            <div className="form-box h-100">
+            <div className="form-box order-sm-6 col-10 col-sm-3 mt-3">
                 <form onSubmit={submitForm}>
-                    <div className="pic-box mb-5 align-items-end d-inline-block fixed">
+                    <div className="pic-box2 mb-5 p-2">
                         
                         <div>
-                            <img src={ imageKey ? "http://localhost:8000/api/images/" + imageKey : emptyprofile} alt="" className="profile-photo" />
-                            <div className="card-titles">
+                            <img src={ imageKey ? "http://localhost:8000/api/images/" + imageKey : emptyprofile} alt="" className="profile-photo mt-2 d-inline" />
+                            <div className="card-titles mt-3">
                                 <h4>{loggedUser1.name}</h4>
                                 <h6>{stackType}</h6>
                             </div>
                         </div>
-
-                    
-                        <div className="innerPic mt-2">
-
-                            <div>
+                            <div className="mt-3">
                             {skillsArr.map((skill,idx)=>(
                                 <>
                                     <img key={idx} src={enumObj[skill]} alt="" height="40" width="40" className="mb-2 mr-1" value={`${skill}`} />
                                 </> 
                             ))}
                             </div>
-                            
-                        </div>
-                    </div><br></br>
+                    </div>
                 </form>   
             </div>
         </>   

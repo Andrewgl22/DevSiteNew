@@ -40,13 +40,14 @@ const Login = () => {
     }
 
     return(
-        <Container fluid>
+        
             <Row className="d-flex justify-content-center h-100 align-items-center">
                 <Col className="col-8 col-sm-4 vh-100">
-                <h1>Login</h1>
-                <Link to="/register">Register Here</Link>
-                
-                    <Form className="mx-auto" type="">
+                <div className="align-items-center text-center mt-4 mb-4">
+                    <h3 className="">Login to DevHyre</h3>
+                    <Link to="/register" className="d-block">Need an account? Register here.</Link>
+                </div>
+                    <Form className="mx-auto text-center" type="">
                         <p className="text-danger font-weight-bold">{errors}</p>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
@@ -61,7 +62,7 @@ const Login = () => {
                 </Col>
             </Row>
         
-        </Container>
+       
     )
 }
 

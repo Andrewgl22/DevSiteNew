@@ -40,7 +40,7 @@ const DevInfo = () => {
                 {dev.imageKey ?
                 <img src={"http://localhost:8000/api/images/" + dev.imageKey} alt="" className="profile-photo2" /> :null}
                 
-                    <h3 className="text-align">{dev.name}</h3>
+                    <h3 className="text-align mt-2">{dev.name}</h3>
                     <div className="col-10 offset-1 text-center">
 
                     {dev.skills ? dev.skills.map((skill,idx)=>(

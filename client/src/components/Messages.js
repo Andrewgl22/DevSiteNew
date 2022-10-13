@@ -32,9 +32,8 @@ const Messages = () => {
     }
 
     return(
-        <Container fluid className="m-5 p-0">
-            <Row className="align-items-center justify-content-center">
-                <Table className="bordered table table-striped col-10 col-sm-6 mt-3 ">
+            <Row className="justify-content-center mt-5">
+                <Table className="table table-striped col-10 col-sm-6 mt-5 ">
                     <th>
                         <h2>Messages</h2>
                     </th>
@@ -50,9 +49,7 @@ const Messages = () => {
                     </tbody>
                 </Table>
                     
-            </Row>
-        </Container>
-        
+            </Row> 
     )
 }
 

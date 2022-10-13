@@ -51,7 +51,7 @@ const JobPost = (props) => {
                 <Col className="col-md-12"></Col>
                 {console.log(id)}
             </Row> */}
-            <Row className="d-flex h-75 pb-5 justify-content-center ml-5 align-items-center">
+            <Row className="d-flex h-75 pb-5 justify-content-center ml-5 mt-2 align-items-center">
                 <Col className="col-12 col-md-8 col-lg-4">
                     <Col className="col">
                         <h1>{job.position}</h1>

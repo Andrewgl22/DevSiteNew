@@ -39,7 +39,7 @@ const JobList = () => {
     
 
     return(
-        <div className="col-10 col-sm-3 order-sm-12 ml-5 p-3 mb-4 border justify-content-between" style={{overflow:"scroll", height:"430px"}}>
+        <div className="col-10 col-sm-3 mt-2 mx-auto order-sm-12 ml-5 p-3 mb-4 border justify-content-between" style={{overflow:"scroll", height:"430px"}}>
             { loggedUser1.type === "employer" ? <Link to="/addJob" className="job-button">Add new Job</Link> : null}
             <h3 className="mt-3">Open Jobs</h3>
             {jobList.sort((a,b)=>a.perc < b.perc ? 1:-1).map((job,idx)=>(

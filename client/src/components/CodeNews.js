@@ -27,7 +27,7 @@ const CodeNews = () => {
     },[])
 
     return(           
-                <div className="order-sm-1 mb-4 col-10 col-sm-2 mt-3 justifiy-content-start offset-1 border mr-5 p-3" style={{display:"inline-block", color:"green"}}>
+                <div className="order-sm-1 mb-4 col-10 col-sm-2 mt-2 justifiy-content-start offset-1 border mr-5 p-3" style={{display:"inline-block", color:"green"}}>
                             <h3 style={{color:"black"}}>Recent News</h3>
                             {articles.map((article, idx)=>(
                                 <div key={idx}>

@@ -72,13 +72,13 @@ const BioForm = ({type, stackType, imageKey, skillsArr,progressValue,setProgress
     }
 
     return(
-        <div className="form-box">
-        <h3>Add links to your work</h3>
-                <label>Github: </label>
-                <input type="text" onChange={(e)=>siteChange(e.target.value)}></input><br></br>
-                <label>Personal Site: </label>
-                <input type="text" onChange={(e)=>webChange(e.target.value)}></input><br></br>
-        <Button onClick={submitHandler} className="mt-2">Submit</Button>
+        <div className="form-box mr-3 mt-3">
+            <h3>Add links to your work</h3>
+                    <label className="form-label">Github: </label>
+                    <input type="text" className="form-control" onChange={(e)=>siteChange(e.target.value)}></input><br></br>
+                    <label className="form-label">Personal Site: </label>
+                    <input type="text" className="form-control" onChange={(e)=>webChange(e.target.value)}></input><br></br>
+            <Button onClick={submitHandler} className="mt-2">Submit</Button>
         </div>
     )
 }

@@ -21,7 +21,7 @@ const ProgressBar = (props) => {
     
  
     return (
-        <div className="progress mb-3 ml-2 mt-3" style={{width: "20%"}}>
+        <div className="progress col-6 col-sm-4 mb-3 mt-3">
             <div className={`progress-bar ${progColor()} `} role="progressbar" style={{width: `${progressVal}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{Math.round(progressVal)}%</div>
         </div>
     )
