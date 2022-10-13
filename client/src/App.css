@@ -35,6 +35,13 @@ html, body, #root, #app>div {
   margin-right:200px;
 }
 
+@medio (max-width:576px){
+  .avatar img {
+    height:0;
+    width:0;
+  }
+}
+
 .blueHeader {
   background-color:lightblue;
   border:2px solid black;

@@ -17,10 +17,6 @@ html {
   height:100vh;
 }
 
-*{
-  border:2px dotted red;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
