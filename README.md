@@ -23,7 +23,7 @@ they are most qualified for based on their language proficencies.
 From your terminal:
 
 ```
-git clone repo
+git clone https://github.com/Andrewgl22/DevSiteNew.git
 ```
 To run client:
 ```
